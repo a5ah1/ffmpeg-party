@@ -1,0 +1,503 @@
+@import "tailwindcss";
+
+/* Custom dark mode styles with Zinc and Teal color scheme */
+:root {
+  color-scheme: dark;
+}
+
+/* =================================================================
+   FFmpeg.party Custom Components
+   ================================================================= */
+
+/* Form Field Base Styles
+   ----------------------------------------------------------------- */
+.ffmpeg-field {
+  @apply mb-6;
+}
+
+.ffmpeg-field label {
+  @apply block text-sm font-medium text-zinc-300 mb-2;
+}
+
+.ffmpeg-field input[type="text"],
+.ffmpeg-field input[type="number"],
+.ffmpeg-field input[type="email"],
+.ffmpeg-field input[type="url"],
+.ffmpeg-field input[type="file"] {
+  @apply w-full px-4 py-2.5
+         bg-zinc-900 border border-zinc-700 rounded-md
+         text-white placeholder-zinc-500
+         focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500
+         transition-colors;
+}
+
+.ffmpeg-field select {
+  @apply w-full px-4 py-2.5
+         bg-zinc-900 border border-zinc-700 rounded-md
+         text-white
+         focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500
+         transition-colors cursor-pointer;
+}
+
+.ffmpeg-field textarea {
+  @apply w-full px-4 py-2.5
+         bg-zinc-900 border border-zinc-700 rounded-md
+         text-white placeholder-zinc-500
+         focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500
+         transition-colors resize-y;
+}
+
+.ffmpeg-field input[type="range"] {
+  @apply w-full h-2 bg-zinc-700 rounded-lg appearance-none cursor-pointer;
+}
+
+.ffmpeg-field input[type="range"]::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-teal-500 rounded-full cursor-pointer;
+}
+
+.ffmpeg-field input[type="range"]::-moz-range-thumb {
+  @apply w-4 h-4 bg-teal-500 rounded-full cursor-pointer border-0;
+}
+
+/* Helper text */
+.ffmpeg-field .field-hint {
+  @apply text-sm text-zinc-500 mt-1;
+}
+
+/* Pseudo label for checkbox/radio groups */
+.ffmpeg-field .pseudo-label {
+  @apply block text-sm font-medium text-zinc-300 mb-3;
+}
+
+/* Checkbox & Radio Button Styles
+   ----------------------------------------------------------------- */
+.ffmpeg-checkbox-group,
+.ffmpeg-radio-group {
+  @apply flex flex-wrap gap-4;
+}
+
+.ffmpeg-checkbox-option,
+.ffmpeg-radio-option {
+  @apply flex items-center gap-2;
+}
+
+.ffmpeg-checkbox-option input[type="checkbox"],
+.ffmpeg-radio-option input[type="radio"] {
+  @apply w-4 h-4
+         text-teal-500 bg-zinc-900 border-zinc-700
+         focus:ring-2 focus:ring-teal-500 focus:ring-offset-0
+         cursor-pointer;
+}
+
+.ffmpeg-checkbox-option label,
+.ffmpeg-radio-option label {
+  @apply text-sm text-zinc-300 cursor-pointer mb-0;
+}
+
+/* Form Grid Layout
+   ----------------------------------------------------------------- */
+/* Grid layouts should use Tailwind utilities directly in HTML:
+   - Container: class="grid grid-cols-1 md:grid-cols-2 gap-6"
+   - Span 2 columns: class="ffmpeg-field md:col-span-2"
+   - Span all columns: class="ffmpeg-field col-span-full"
+*/
+
+/* Remove bottom margin from fields when in grid layouts */
+.grid > .ffmpeg-field {
+  @apply mb-0;
+}
+
+/* Output Display
+   ----------------------------------------------------------------- */
+.ffmpeg-output-wrapper {
+  @apply mt-8;
+}
+
+.ffmpeg-output-wrapper label {
+  @apply block text-sm font-medium text-zinc-300 mb-3;
+}
+
+.ffmpeg-output {
+  @apply bg-black p-5 rounded-md border border-zinc-700
+         text-teal-400 font-mono text-sm leading-relaxed
+         overflow-x-auto whitespace-pre-wrap break-all
+         min-h-[4rem];
+}
+
+.ffmpeg-output.error {
+  @apply text-red-400 border-red-700/50;
+}
+
+.ffmpeg-output:empty::before {
+  content: 'Command will appear here...';
+  @apply text-zinc-600;
+}
+
+/* Copy Button & Status
+   ----------------------------------------------------------------- */
+.ffmpeg-copy-wrapper {
+  @apply flex items-center gap-3 mt-4;
+}
+
+.ffmpeg-copy-button {
+  @apply bg-teal-500 hover:bg-teal-600 active:bg-teal-700
+         text-white font-semibold px-6 py-2.5 rounded-md
+         transition-colors cursor-pointer
+         disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-teal-500;
+}
+
+.ffmpeg-copy-status {
+  @apply text-teal-400 text-sm font-medium opacity-0 transition-opacity;
+}
+
+.ffmpeg-copy-status.show {
+  @apply opacity-100;
+}
+
+/* Admonition/Warning Box
+   ----------------------------------------------------------------- */
+.ffmpeg-admonition {
+  @apply bg-zinc-800/50 border border-zinc-700
+         rounded-lg p-4 mb-8 flex items-start gap-3;
+}
+
+.ffmpeg-admonition-icon {
+  @apply text-zinc-400 flex-shrink-0 mt-0.5;
+}
+
+.ffmpeg-admonition p {
+  @apply text-zinc-300 text-sm leading-relaxed mb-0;
+}
+
+/* Info Box (neutral variant) */
+.ffmpeg-info {
+  @apply bg-blue-900/20 border border-blue-700/50
+         rounded-lg p-4 mb-8 flex items-start gap-3;
+}
+
+.ffmpeg-info-icon {
+  @apply text-blue-400 flex-shrink-0 mt-0.5;
+}
+
+.ffmpeg-info p {
+  @apply text-blue-200 text-sm leading-relaxed mb-0;
+}
+
+/* Section Headers
+   ----------------------------------------------------------------- */
+.ffmpeg-section-header {
+  @apply text-2xl font-bold text-white mb-6 mt-12 first:mt-0;
+}
+
+.ffmpeg-section-subheader {
+  @apply text-xl font-semibold text-zinc-200 mb-4 mt-8;
+}
+
+/* Tool About Section
+   ----------------------------------------------------------------- */
+.ffmpeg-about {
+  @apply bg-zinc-800/50 rounded-lg p-6 border border-zinc-700 mt-12;
+}
+
+.ffmpeg-about h2 {
+  @apply text-2xl font-bold text-white mb-4;
+}
+
+.ffmpeg-about h3 {
+  @apply text-xl font-semibold text-zinc-200 mb-3 mt-6;
+}
+
+.ffmpeg-about p {
+  @apply text-zinc-300 mb-4 leading-relaxed;
+}
+
+.ffmpeg-about ul,
+.ffmpeg-about ol {
+  @apply text-zinc-300 mb-4 ml-6 space-y-2;
+}
+
+.ffmpeg-about ul {
+  @apply list-disc;
+}
+
+.ffmpeg-about ol {
+  @apply list-decimal;
+}
+
+.ffmpeg-about a {
+  @apply text-teal-400 hover:text-teal-300 underline;
+}
+
+.ffmpeg-about code {
+  @apply bg-zinc-900 px-2 py-0.5 rounded text-sm text-teal-400 font-mono;
+}
+
+/* Calculations Display (for crop calculator, etc.)
+   ----------------------------------------------------------------- */
+.ffmpeg-calculations {
+  @apply bg-zinc-900 border border-zinc-700 rounded-md p-4 space-y-2;
+}
+
+.ffmpeg-calculations p {
+  @apply text-zinc-300 text-sm font-mono mb-0;
+}
+
+.ffmpeg-calculations .faded {
+  @apply text-zinc-500;
+}
+
+/* Stage/Preview Area (for visual tools like croppers)
+   ----------------------------------------------------------------- */
+.ffmpeg-stage {
+  @apply relative bg-zinc-900 border border-zinc-700 rounded-lg overflow-hidden mb-8;
+}
+
+/* Utility Classes
+   ----------------------------------------------------------------- */
+.ffmpeg-muted {
+  @apply text-zinc-500;
+}
+
+.ffmpeg-accent {
+  @apply text-teal-400;
+}
+
+.ffmpeg-error-text {
+  @apply text-red-400;
+}
+
+.ffmpeg-success-text {
+  @apply text-green-400;
+}
+
+/* Navigation Dropdown Styles
+   ----------------------------------------------------------------- */
+.dropdown.open .dropdown-menu {
+  @apply opacity-100 visible;
+}
+
+.dropdown.open .dropdown-arrow {
+  @apply rotate-180;
+}
+
+.dropdown-menu {
+  @apply pointer-events-none;
+}
+
+.dropdown.open .dropdown-menu {
+  @apply pointer-events-auto;
+}
+
+/* Mobile Accordion Styles
+   ----------------------------------------------------------------- */
+.mobile-accordion.open .mobile-accordion-content {
+  max-height: 500px;
+}
+
+.mobile-accordion.open .mobile-accordion-arrow {
+  @apply rotate-180;
+}
+
+/* Prose/Content Styles (for markdown-generated content)
+   ----------------------------------------------------------------- */
+.prose {
+  @apply text-zinc-300 leading-relaxed;
+}
+
+.prose h1 {
+  @apply text-4xl font-bold text-white mb-6 mt-12 first:mt-0;
+}
+
+.prose h2 {
+  @apply text-3xl font-bold text-white mb-5 mt-10 first:mt-0;
+}
+
+.prose h3 {
+  @apply text-2xl font-semibold text-zinc-200 mb-4 mt-8 first:mt-0;
+}
+
+.prose h4 {
+  @apply text-xl font-semibold text-zinc-200 mb-3 mt-6 first:mt-0;
+}
+
+.prose h5 {
+  @apply text-lg font-semibold text-zinc-300 mb-3 mt-5 first:mt-0;
+}
+
+.prose h6 {
+  @apply text-base font-semibold text-zinc-300 mb-2 mt-4 first:mt-0;
+}
+
+.prose p {
+  @apply mb-5 leading-relaxed;
+}
+
+.prose ul,
+.prose ol {
+  @apply mb-5 ml-6 space-y-2;
+}
+
+.prose ul {
+  @apply list-disc;
+}
+
+.prose ol {
+  @apply list-decimal;
+}
+
+.prose li {
+  @apply leading-relaxed;
+}
+
+.prose li > ul,
+.prose li > ol {
+  @apply mt-2 mb-0;
+}
+
+.prose a {
+  @apply text-teal-400 hover:text-teal-300 underline transition-colors;
+}
+
+.prose strong {
+  @apply font-semibold text-white;
+}
+
+.prose em {
+  @apply italic;
+}
+
+.prose code {
+  @apply bg-zinc-900 px-2 py-0.5 rounded text-sm text-teal-400 font-mono;
+}
+
+.prose pre {
+  @apply bg-black border border-zinc-700 rounded-md p-4 mb-5 overflow-x-auto;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-teal-400;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-teal-500 pl-4 italic text-zinc-400 my-5;
+}
+
+.prose hr {
+  @apply border-zinc-700 my-8;
+}
+
+.prose table {
+  @apply w-full mb-5 border border-zinc-700;
+}
+
+.prose thead {
+  @apply bg-zinc-800;
+}
+
+.prose th {
+  @apply px-4 py-2 text-left font-semibold text-white border-b border-zinc-700;
+}
+
+.prose td {
+  @apply px-4 py-2 border-b border-zinc-800;
+}
+
+.prose tbody tr:last-child td {
+  @apply border-b-0;
+}
+
+.prose img {
+  @apply rounded-lg my-5;
+}
+
+/* Remove margin from last child to prevent extra spacing at bottom */
+.prose > *:last-child {
+  @apply mb-0;
+}
+
+/* Tool Launch Button - Override prose link styles */
+.tool-launch-button {
+  @apply inline-block bg-teal-600 hover:bg-teal-500 font-semibold px-6 py-3 rounded-lg transition-colors;
+  color: oklch(96.7% 0.001 286.375) !important; /* zinc-100 */
+  text-decoration: none !important;
+}
+
+.tool-launch-button:hover {
+  color: oklch(96.7% 0.001 286.375) !important; /* zinc-100 */
+}
+
+/* Headroom.js - Sticky Header Animations
+   ----------------------------------------------------------------- */
+.headroom {
+  will-change: transform;
+  transition: transform 200ms linear;
+}
+
+.headroom--pinned {
+  transform: translateY(0%);
+}
+
+.headroom--unpinned {
+  transform: translateY(-100%);
+}
+
+.headroom--top {
+  /* Optional: Add styles when at the top of the page */
+}
+
+.headroom--not-top {
+  /* Optional: Add shadow or other styles when scrolled */
+  @apply shadow-lg;
+}
+
+/* Home Hero Section
+   ----------------------------------------------------------------- */
+.hero-home {
+  @apply relative bg-no-repeat w-full;
+  background-size: cover;
+  background-position: center center;
+  aspect-ratio: 1 / 1; /* Mobile: square */
+  background-image: url('/images/ffmpeg-party--mobile.jpg');
+}
+
+@media (min-width: 768px) {
+  .hero-home {
+    aspect-ratio: auto;
+    /* Prefer 16:9 aspect ratio but cap at 66vh for ultra-wide viewports */
+    height: min(56.25vw, 66vh); /* 9/16 = 0.5625 */
+    background-image: url('/images/ffmpeg-party--tablet.jpg');
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-home {
+    /* Prefer 21:9 aspect ratio but cap at 66vh for ultra-wide viewports */
+    height: min(42.86vw, 66vh); /* 9/21 ≈ 0.4286 */
+    background-image: url('/images/ffmpeg-party--desktop.jpg');
+  }
+}
+
+.hero-text-box {
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+         bg-zinc-800 text-zinc-300 rounded-md;
+  padding: 1em;
+}
+
+/* Responsive Utilities
+   ----------------------------------------------------------------- */
+@media (max-width: 767px) {
+  /* Reduce margin on standalone fields (not in grid) on mobile */
+  .ffmpeg-field {
+    @apply mb-4;
+  }
+
+  /* But keep grid children at mb-0 (gap handles spacing) */
+  .grid > .ffmpeg-field {
+    @apply mb-0;
+  }
+
+  /* Smaller text for command output on mobile */
+  .ffmpeg-output {
+    @apply text-xs;
+  }
+}

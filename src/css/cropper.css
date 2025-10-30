@@ -1,0 +1,285 @@
+/* Cropper-specific styles with zinc/teal theme */
+
+:root {
+  /* Zinc colors - oklch */
+  --zinc-50: oklch(98.5% 0 0);
+  --zinc-100: oklch(96.7% 0.001 286.375);
+  --zinc-200: oklch(92% 0.004 286.32);
+  --zinc-300: oklch(87.1% 0.006 286.286);
+  --zinc-400: oklch(70.5% 0.015 286.067);
+  --zinc-500: oklch(55.2% 0.016 285.938);
+  --zinc-600: oklch(44.2% 0.017 285.786);
+  --zinc-700: oklch(37% 0.013 285.805);
+  --zinc-800: oklch(27.4% 0.006 286.033);
+  --zinc-900: oklch(21% 0.006 285.885);
+  --zinc-950: oklch(14.1% 0.005 285.823);
+
+  /* Teal colors - oklch */
+  --teal-400: oklch(77.7% 0.152 181.912);
+  --teal-500: oklch(70.4% 0.14 182.503);
+  --teal-600: oklch(60% 0.118 184.704);
+}
+
+/* Theme variables */
+:root {
+  --bg: var(--zinc-950);
+  --bg-container: var(--zinc-900);
+  --fg: var(--zinc-50);
+  --controls-bg: var(--zinc-900);
+  --input-bg: var(--zinc-800);
+  --input-fg: var(--zinc-100);
+  --btn-bg: var(--teal-600);
+  --btn-hover-bg: var(--teal-500);
+  --btn-fg: var(--zinc-50);
+  --accent: var(--teal-500);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  font-size: 1rem;
+  color: var(--fg);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+input,
+select,
+button {
+  font-family: inherit;
+}
+
+/* Header */
+.cropper-header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3rem;
+  padding: 0 1rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--zinc-800);
+}
+
+.cropper-header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.return-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.2s;
+}
+
+.return-link:hover {
+  color: var(--teal-400);
+}
+
+h1 {
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.settings-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: color 0.2s;
+}
+
+.settings-btn:hover {
+  color: var(--teal-400);
+}
+
+/* Preview */
+.preview-area {
+  flex: 1 1 auto;
+  position: relative;
+  background: var(--bg-container);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#cropCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+#dropHint {
+  position: absolute;
+  color: var(--zinc-400);
+  font-size: 0.875rem;
+  pointer-events: none;
+}
+
+/* Controls */
+.controls {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--controls-bg);
+  border-top: 1px solid var(--zinc-800);
+}
+
+.controls label {
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--zinc-300);
+}
+
+.controls input[type="number"],
+.controls input[readonly],
+.controls select {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  background: var(--input-bg);
+  color: var(--input-fg);
+  border: 1px solid var(--zinc-700);
+  border-radius: 0.25rem;
+}
+
+.controls input[type="number"]:focus,
+.controls select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+#cropX,
+#cropY,
+#cropW,
+#cropH {
+  width: 4.5rem;
+}
+
+.filter-label {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-label input {
+  flex: 1;
+  min-width: 0;
+}
+
+.controls button {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: none;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: 500;
+}
+
+.controls button:hover {
+  background: var(--btn-hover-bg);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: var(--bg-container);
+  color: var(--fg);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  width: 90%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid var(--zinc-800);
+}
+
+.modal-content h2 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.modal-content label {
+  font-size: 0.875rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  color: var(--zinc-300);
+}
+
+.modal-content input[type="color"] {
+  width: 3rem;
+  height: 2rem;
+  border: 1px solid var(--zinc-700);
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.modal-content input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent);
+}
+
+.modal-content span {
+  min-width: 3rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.modal-content button {
+  align-self: flex-end;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: 500;
+}
+
+.modal-content button:hover {
+  background: var(--btn-hover-bg);
+}

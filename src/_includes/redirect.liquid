@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0; url={{ redirectTo }}">
+  <link rel="canonical" href="{{ redirectTo }}">
+  <title>Redirecting...</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #18181b;
+      color: #a1a1aa;
+    }
+  </style>
+</head>
+<body>
+  <p>Redirecting to <a href="{{ redirectTo }}" style="color: #14b8a6;">{{ redirectTo }}</a>...</p>
+  <script>window.location.href = "{{ redirectTo }}";</script>
+</body>
+</html>

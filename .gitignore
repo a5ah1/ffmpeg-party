@@ -1,0 +1,57 @@
+# Dependencies
+node_modules/
+
+# Build output
+_site/
+dist/
+build/
+
+# Generated CSS (compiled from source)
+src/css/output.css
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.tmp/
+
+# Project-specific (private working files)
+CLAUDE.md
+.claude/
+
+# Optional: Uncomment if you prefer not to commit lock files
+# package-lock.json
+# yarn.lock

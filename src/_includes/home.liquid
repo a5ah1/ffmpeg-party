@@ -1,0 +1,211 @@
+---
+layout: base.liquid
+---
+
+<div class="min-h-[calc(100vh-theme(spacing.16)-theme(spacing.24))]">
+  <!-- Hero Section -->
+  <section class="hero-home">
+    <div class="hero-text-box">
+      welcome to the party
+    </div>
+  </section>
+
+  <!-- Main Content Section -->
+  <section class="py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-3xl font-bold text-white mb-6">
+        FFmpeg tools, tips, & tricks
+      </h1>
+      <p class="text-zinc-300 leading-relaxed mb-4">
+        Updated <time datetime="{{ updated }}" class="text-teal-400">{{ updated }}</time>. {{ content }}
+        <a href="/about/" class="text-teal-400 hover:text-teal-300 underline">About »</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Tools Section -->
+  <section class="py-16 px-4 bg-zinc-800/50">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-white mb-4">
+        Tools
+      </h2>
+      <p class="text-center text-zinc-400 mb-12">
+        Interactive generators to help build FFmpeg commands
+      </p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a
+          href="/tools/vp9-wizard/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            VP9 Wizard
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            VP9 command generator for high-quality videos using 2-pass encoding
+          </p>
+        </a>
+
+        <a
+          href="/tools/av1-wizard/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            AV1 Wizard
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            AV1 command generator with SVT-AV1 encoder and optimized parameters
+          </p>
+        </a>
+
+        <a
+          href="/tools/x264-wizard/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            x264 Wizard
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            x264 command generator for H.264/AVC encoding with optimized settings
+          </p>
+        </a>
+
+        <a
+          href="/tools/x265-wizard/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            x265 Wizard
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            x265 command generator for H.265/HEVC encoding with superior compression
+          </p>
+        </a>
+
+        <a
+          href="/tools/cropper/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            Cropper
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            Visual tool for creating FFmpeg crop filters
+          </p>
+        </a>
+
+        <a
+          href="/tools/anamorphic-crop/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            Anamorphic Crop Calculator
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            Calculator for cropping anamorphic video with proper aspect ratio adjustments
+          </p>
+        </a>
+
+        <a
+          href="/tools/duration-calculator/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            Duration Calculator
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            Calculate durations between timestamps for FFmpeg commands
+          </p>
+        </a>
+
+        <a
+          href="/tools/webm-from-image-sequence/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            WebM from Image Sequence
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            Convert image sequences to WebM <span class="text-zinc-500">(Legacy)</span>
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guides Section -->
+  <section class="py-16 px-4">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-white mb-4">
+        Guides
+      </h2>
+      <p class="text-center text-zinc-400 mb-12">
+        Encoder documentation and recommended settings
+      </p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a
+          href="/guides/x264/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            x264 Encoder Guide
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            H.264/AVC encoding reference with quality settings
+          </p>
+        </a>
+
+        <a
+          href="/guides/x265/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            x265 Encoder Guide
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            H.265/HEVC encoding reference and best practices
+          </p>
+        </a>
+
+        <a
+          href="/guides/av1/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            AV1 Encoder Guide
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            AV1 encoding with SVT-AV1 parameters and quality settings
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources Section -->
+  <section class="py-16 px-4 bg-zinc-800/50">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-white mb-4">
+        Resources
+      </h2>
+      <p class="text-center text-zinc-400 mb-12">
+        External FFmpeg resources and references
+      </p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a
+          href="/resources/"
+          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
+        >
+          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
+            FFmpeg Resources
+          </h3>
+          <p class="text-zinc-400 text-sm">
+            Curated links to helpful FFmpeg documentation and tools
+          </p>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

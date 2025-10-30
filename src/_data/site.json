@@ -1,0 +1,9 @@
+{
+  "name": "ffmpeg.party",
+  "url": "https://ffmpeg.party",
+  "title": "ffmpeg.party - Make FFmpeg commands easy",
+  "description": "Interactive FFmpeg command generators and guides. Build FFmpeg commands visually without memorizing complex syntax.",
+  "image": "/images/ffmpeg-party--og.jpg",
+  "imageWidth": "1200",
+  "imageHeight": "628"
+}

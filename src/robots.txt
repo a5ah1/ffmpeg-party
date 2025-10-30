@@ -1,0 +1,5 @@
+# ffmpeg.party robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://ffmpeg.party/sitemap.xml

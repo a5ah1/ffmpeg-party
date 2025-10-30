@@ -1,0 +1,126 @@
+/* Anamorphic Crop Tool - Visual Stage Styles */
+
+:root {
+  --zinc-600: oklch(44.2% 0.017 285.786);
+  --zinc-700: oklch(37% 0.013 285.805);
+  --zinc-800: oklch(27.4% 0.006 286.033);
+  --zinc-900: oklch(21% 0.006 285.885);
+  --red-600: oklch(57.7% 0.245 27.325);
+  --teal-400: oklch(77.7% 0.152 181.912);
+  --teal-500: oklch(70.4% 0.14 182.503);
+}
+
+/* Visual Stage Area */
+.stage {
+  position: relative;
+  min-height: 30vh;
+  width: 100%;
+  background: var(--zinc-600);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 90px 110px;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+.stage.warning {
+  background: var(--red-600);
+}
+
+.frame {
+  position: relative;
+}
+
+.the-image {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.mask {
+  display: none;
+  position: absolute;
+  width: 704px;
+  aspect-ratio: 4/3;
+  top: 0;
+  left: 2px;
+  right: auto;
+  bottom: auto;
+  box-sizing: content-box;
+  background: hsla(160, 84%, 39%, 20%);
+  border: 2px solid var(--teal-400);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.overflow-warning {
+  display: none;
+  position: absolute;
+  bottom: 2rem;
+  top: auto;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  color: white;
+  font-weight: 600;
+  font-size: 21px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.25rem;
+}
+
+/* Drop Zone */
+.drop-zone {
+  position: relative;
+  width: 100%;
+  min-height: 120px;
+  padding: 1rem;
+  background: var(--zinc-800);
+  border: 2px dashed var(--zinc-700);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drop-zone:hover {
+  border-color: var(--teal-500);
+  background: var(--zinc-900);
+}
+
+.drop-zone.drag-over {
+  border-color: var(--teal-400);
+  background: var(--zinc-900);
+  border-style: solid;
+}
+
+.drop-zone-content {
+  text-align: center;
+  pointer-events: none;
+}
+
+.drop-zone-content svg {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.drop-zone-filename {
+  text-align: center;
+  pointer-events: none;
+  width: 100%;
+  padding: 0 0.5rem;
+}
+
+.drop-zone-filename p {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}

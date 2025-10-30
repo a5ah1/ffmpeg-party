@@ -1,0 +1,30 @@
+{
+  "name": "ffmpeg.party",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf _site src/css/output.css",
+    "build:css": "postcss src/css/styles.css -o src/css/output.css --minify",
+    "watch:css": "postcss src/css/styles.css -o src/css/output.css --watch",
+    "start": "npm run watch:css & npx @11ty/eleventy --serve",
+    "dev": "npm run clean && npm run start",
+    "build": "npm run clean && npm run build:css && npx @11ty/eleventy"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2",
+    "@tailwindcss/postcss": "^4.1.16",
+    "cssnano": "^7.1.1",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^4.1.16"
+  },
+  "dependencies": {
+    "headroom.js": "^0.12.0"
+  }
+}
