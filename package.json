@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf _site src/css/output.css",
-    "build:css": "postcss src/css/styles.css -o src/css/output.css --minify",
+    "build:css": "NODE_ENV=production postcss src/css/styles.css -o src/css/output.css",
+    "build:css:dev": "postcss src/css/styles.css -o src/css/output.css",
     "watch:css": "postcss src/css/styles.css -o src/css/output.css --watch",
-    "start": "npm run watch:css & npx @11ty/eleventy --serve",
+    "start": "npm run build:css:dev && (npm run watch:css & npx @11ty/eleventy --serve)",
     "dev": "npm run clean && npm run start",
     "build": "npm run clean && npm run build:css && npx @11ty/eleventy"
   },
