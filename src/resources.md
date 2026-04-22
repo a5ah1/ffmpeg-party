@@ -61,6 +61,7 @@ The best place to start for comprehensive FFmpeg information:
 - **[MediaInfo](https://mediaarea.net/en/MediaInfo)** - Detailed technical information about video and audio files
 - **[FFprobe](https://ffmpeg.org/ffprobe.html)** - FFmpeg's multimedia stream analyzer
 - **[HandBrake](https://handbrake.fr/)** - Popular open-source video transcoder with GUI
+- **[ffmpeg-normalize](https://github.com/slhck/ffmpeg-normalize)** - Python CLI wrapper that batch-normalizes audio loudness using EBU R128 (two-pass), RMS, or peak modes
 
 ## Contributing
 
