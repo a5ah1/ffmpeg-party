@@ -1,12 +1,11 @@
 /**
- * x264 Wizard
- * Generate FFmpeg commands for creating x264/H.264 files
- * Uses CRF-based single-pass encoding
+ * x264 Wizard — generates FFmpeg commands for CRF-based H.264 encoding.
  */
-(function() {
+(function () {
   'use strict';
 
-  // DOM element references
+  const FF = FFmpegFormGenerator;
+
   const elements = {
     inputFile: document.getElementById('inputFile'),
     outputFilename: document.getElementById('outputFilename'),
@@ -38,7 +37,6 @@
     copyStatus: document.getElementById('copyStatus')
   };
 
-  // Frame rate to x264 parameters mapping
   const frameRateParams = {
     '24': 'keyint=240:bframes=6:ref=4:me=umh:subme=9:no-fast-pskip=1:b-adapt=2:aq-mode=2',
     '25': 'keyint=250:bframes=6:ref=4:me=umh:subme=9:no-fast-pskip=1:b-adapt=2:aq-mode=2',
@@ -47,236 +45,67 @@
     '60': 'keyint=600:bframes=7:ref=4:me=umh:subme=9:no-fast-pskip=1:b-adapt=2:aq-mode=2'
   };
 
-  /**
-   * Handle frame rate selection - auto-populate x264 parameters
-   */
   function handleFrameRateChange() {
-    const selectedFps = elements.frameRate.value;
-    if (selectedFps && frameRateParams[selectedFps]) {
-      elements.x264Params.value = frameRateParams[selectedFps];
-    } else if (!selectedFps) {
-      // Clear when "Custom/None" is selected
-      elements.x264Params.value = '';
-    }
-    updateCommand();
+    const fps = elements.frameRate.value;
+    elements.x264Params.value = fps && frameRateParams[fps] ? frameRateParams[fps] : '';
   }
 
-  /**
-   * Handle audio mode change - show/hide appropriate fields
-   */
-  function handleAudioModeChange() {
-    const isCbr = elements.audioModeCbr.checked;
-    const isVbr = elements.audioModeVbr.checked;
-
-    // Show/hide fields based on mode
-    elements.audioBitrateField.style.display = isCbr ? 'block' : 'none';
-    elements.audioQualityField.style.display = isVbr ? 'block' : 'none';
-
-    // Update quality field defaults and hints based on codec
-    if (isVbr) {
-      updateAudioQualityDefaults();
-    }
-
-    updateCommand();
-  }
-
-  /**
-   * Update audio quality field based on selected codec
-   */
-  function updateAudioQualityDefaults() {
-    const codec = elements.audioCodec.value;
-
-    if (codec === 'aac') {
-      elements.audioQuality.min = '0.1';
-      elements.audioQuality.max = '2';
-      elements.audioQuality.step = '0.1';
-      if (!elements.audioQuality.value) {
-        elements.audioQuality.value = '2';
-      }
-      elements.audioQualityHint.textContent = 'Range: 0.1-2 (experimental, 2 is good quality)';
-    } else if (codec === 'libfdk_aac') {
-      elements.audioQuality.min = '1';
-      elements.audioQuality.max = '5';
-      elements.audioQuality.step = '1';
-      if (!elements.audioQuality.value) {
-        elements.audioQuality.value = '3';
-      }
-      elements.audioQualityHint.textContent = 'Range: 1-5 (1=lowest quality, 5=highest)';
-    }
-  }
-
-  /**
-   * Handle audio codec change
-   */
   function handleAudioCodecChange() {
-    // Update VBR quality defaults if in VBR mode
-    if (elements.audioModeVbr.checked) {
-      updateAudioQualityDefaults();
-    }
-    updateCommand();
+    if (elements.audioModeVbr.checked) FF.audio.updateAacQualityDefaults(elements);
   }
 
-  /**
-   * Build metadata options
-   */
   function buildMetadataOptions() {
-    const metadata = {};
-
-    if (elements.metadataTitle.value.trim()) {
-      metadata.title = elements.metadataTitle.value;
-    }
-
-    if (elements.metadataDescription.value.trim()) {
-      metadata.description = elements.metadataDescription.value;
-    }
-
-    // Only use comment if user provides one (x264 already records encoding info)
-    if (elements.metadataCommentOverride.value.trim()) {
-      metadata.comment = elements.metadataCommentOverride.value;
-    }
-
-    const custom = {};
-    if (elements.metadataYear.value.trim()) {
-      custom.year = elements.metadataYear.value.trim();
-    }
-
-    return FFmpegFormGenerator.command.buildMetadata({
+    // x264 already records encoding info, so only set comment if user provides an override.
+    return FF.command.buildMetadata({
       removeExisting: elements.removeMetadata.checked,
-      title: metadata.title,
-      description: metadata.description,
-      comment: metadata.comment,
-      custom: Object.keys(custom).length > 0 ? custom : null
+      title: elements.metadataTitle.value,
+      description: elements.metadataDescription.value,
+      comment: elements.metadataCommentOverride.value,
+      custom: elements.metadataYear.value.trim() ? { year: elements.metadataYear.value.trim() } : null
     });
   }
 
-  /**
-   * Build audio encoding options
-   */
-  function buildAudioOptions() {
-    const parts = [];
-    const codec = elements.audioCodec.value;
-    const isCbr = elements.audioModeCbr.checked;
-
-    parts.push(`-c:a ${codec}`);
-
-    if (isCbr) {
-      // CBR mode - use bitrate
-      const bitrate = elements.audioBitrate.value.trim();
-      if (bitrate) {
-        parts.push(`-b:a ${bitrate}`);
-      }
-    } else {
-      // VBR mode
-      const quality = elements.audioQuality.value.trim();
-      if (quality) {
-        if (codec === 'aac') {
-          parts.push(`-q:a ${quality}`);
-        } else if (codec === 'libfdk_aac') {
-          parts.push(`-vbr ${quality}`);
-        }
-      }
-    }
-
-    return parts.join(' ');
-  }
-
-  /**
-   * Update FFmpeg command
-   */
   function updateCommand() {
-    const inPointValue = FFmpegFormGenerator.command.formatTime(elements.inPoint.value);
-    const outPointValue = FFmpegFormGenerator.command.formatTime(elements.outPoint.value);
-
-    // Validation
-    let errorMessage = '';
     if (!elements.inputFile.value) {
-      errorMessage = 'Please specify an input file.';
-    } else if (!elements.outputFilename.value) {
-      errorMessage = 'Please specify an output file.';
-    }
-
-    if (errorMessage) {
-      FFmpegFormGenerator.ui.showError(elements.output, errorMessage);
+      FF.ui.showError(elements.output, 'Please specify an input file.');
       return;
     }
-
-    FFmpegFormGenerator.ui.clearError(elements.output);
-
-    // Build command parts
-    const commandParts = ['ffmpeg'];
-
-    // Input timing
-    if (inPointValue) {
-      commandParts.push(`-ss ${inPointValue}`);
+    if (!elements.outputFilename.value) {
+      FF.ui.showError(elements.output, 'Please specify an output file.');
+      return;
     }
-    if (outPointValue) {
-      commandParts.push(`-to ${outPointValue}`);
-    }
+    FF.ui.clearError(elements.output);
 
-    // Input file
-    commandParts.push(`-i "${elements.inputFile.value}"`);
+    const parts = ['ffmpeg'];
 
-    // Video codec
-    commandParts.push('-c:v libx264');
+    parts.push(FF.command.buildCommonOptions({
+      input: elements.inputFile.value,
+      startTime: elements.inPoint.value,
+      endTime: elements.outPoint.value
+    }));
 
-    // CRF
-    commandParts.push(`-crf ${elements.crf.value || '23'}`);
+    parts.push('-c:v libx264');
+    parts.push(`-crf ${elements.crf.value || '23'}`);
+    parts.push(`-preset ${elements.preset.value}`);
 
-    // Preset
-    commandParts.push(`-preset ${elements.preset.value}`);
+    if (elements.tune.value) parts.push(`-tune ${elements.tune.value}`);
+    if (elements.pixelFormat.value) parts.push(`-pix_fmt ${elements.pixelFormat.value}`);
+    if (elements.x264Params.value.trim()) parts.push(`-x264-params "${elements.x264Params.value.trim()}"`);
 
-    // Tune (optional)
-    if (elements.tune.value) {
-      commandParts.push(`-tune ${elements.tune.value}`);
-    }
+    parts.push(FF.command.buildFilter(elements.videoFilter.value));
+    parts.push(FF.audio.buildAacOptions(elements));
+    parts.push(buildMetadataOptions());
 
-    // Pixel format (optional)
-    if (elements.pixelFormat.value) {
-      commandParts.push(`-pix_fmt ${elements.pixelFormat.value}`);
-    }
+    if (elements.additionalOptions.value.trim()) parts.push(elements.additionalOptions.value.trim());
 
-    // x264 parameters (optional)
-    if (elements.x264Params.value.trim()) {
-      commandParts.push(`-x264-params "${elements.x264Params.value.trim()}"`);
-    }
+    parts.push(`"${elements.outputFilename.value}"`);
 
-    // Video filter (optional)
-    if (elements.videoFilter.value.trim()) {
-      commandParts.push(`-vf "${elements.videoFilter.value.trim()}"`);
-    }
-
-    // Audio encoding
-    const audioOptions = buildAudioOptions();
-    if (audioOptions) {
-      commandParts.push(audioOptions);
-    }
-
-    // Metadata
-    const metadata = buildMetadataOptions();
-    if (metadata) {
-      commandParts.push(metadata);
-    }
-
-    // Additional options
-    if (elements.additionalOptions.value.trim()) {
-      commandParts.push(elements.additionalOptions.value.trim());
-    }
-
-    // Output file
-    commandParts.push(`"${elements.outputFilename.value}"`);
-
-    const fullCommand = commandParts.join(' ');
-    elements.output.textContent = fullCommand;
-
-    // Save state
-    FFmpegFormGenerator.storage.saveAllInputs(elements);
+    elements.output.textContent = parts.filter(Boolean).join(' ');
+    FF.storage.saveAllInputs(elements);
   }
 
-  /**
-   * Restore input values from sessionStorage
-   */
   function restoreInputValues() {
-    const defaults = {
+    FF.storage.restoreAllInputs(elements, {
       crf: '23',
       preset: 'medium',
       tune: '',
@@ -286,72 +115,38 @@
       audioModeCbr: true,
       audioBitrate: '192k',
       audioQuality: '2'
-    };
-
-    FFmpegFormGenerator.storage.restoreAllInputs(elements, defaults);
-
-    // Set initial visibility of audio fields
-    handleAudioModeChange();
+    });
+    FF.audio.applyAacVisibility(elements);
   }
 
-  /**
-   * Set up event listeners
-   */
   function setupEventListeners() {
-    // Frame rate dropdown - special handler for auto-population
     elements.frameRate.addEventListener('change', handleFrameRateChange);
-
-    // Audio mode radio buttons
-    elements.audioModeCbr.addEventListener('change', handleAudioModeChange);
-    elements.audioModeVbr.addEventListener('change', handleAudioModeChange);
-
-    // Audio codec dropdown
+    elements.audioModeCbr.addEventListener('change', () => FF.audio.applyAacVisibility(elements));
+    elements.audioModeVbr.addEventListener('change', () => FF.audio.applyAacVisibility(elements));
     elements.audioCodec.addEventListener('change', handleAudioCodecChange);
 
-    // Set up all form inputs to trigger command update
-    FFmpegFormGenerator.events.setupFormInputs(
-      elements,
-      updateCommand,
-      null  // We handle saving in updateCommand
-    );
-
-    // Set up copy button
-    FFmpegFormGenerator.events.setupCopyButton(
-      elements.copyButton,
-      elements.output,
-      elements.copyStatus
-    );
+    FF.events.setupFormInputs(elements, updateCommand);
+    FF.events.setupCopyButton(elements.copyButton, elements.output, elements.copyStatus);
   }
 
-  /**
-   * Handle reset form button
-   */
   function handleResetForm() {
     if (confirm('Reset all form fields? This cannot be undone.')) {
-      FFmpegFormGenerator.storage.clearAll();
+      FF.storage.clearAll();
       location.reload();
     }
   }
 
-  /**
-   * Initialize application
-   */
   function init() {
-    // Set namespace for storage isolation
-    FFmpegFormGenerator.storage.setNamespace('x264-wizard');
+    FF.storage.setNamespace('x264-wizard');
 
-    // Set up reset button
     const resetButton = document.getElementById('resetForm');
-    if (resetButton) {
-      resetButton.addEventListener('click', handleResetForm);
-    }
+    if (resetButton) resetButton.addEventListener('click', handleResetForm);
 
     restoreInputValues();
     setupEventListeners();
     updateCommand();
   }
 
-  // Start when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

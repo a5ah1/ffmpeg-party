@@ -1,12 +1,11 @@
 /**
- * AV1 Wizard
- * Generate FFmpeg commands for creating AV1 files with SVT-AV1 encoder
- * Uses single-pass encoding
+ * AV1 Wizard — generates FFmpeg commands using the SVT-AV1 encoder.
  */
-(function() {
+(function () {
   'use strict';
 
-  // DOM element references
+  const FF = FFmpegFormGenerator;
+
   const elements = {
     inPoint: document.getElementById('inPoint'),
     inputFile: document.getElementById('inputFile'),
@@ -33,245 +32,119 @@
     metadataDate: document.getElementById('metadataDate')
   };
 
-  /**
-   * Build SVT-AV1 encoding parameters string
-   */
+  const stripColons = (s) => s.replace(/^:+|:+$/g, '');
+
+  function getExtraParams() {
+    return stripColons(elements.extraParams.value.trim());
+  }
+
   function buildSvtAv1Params() {
-    const params = [];
+    const params = [
+      `crf=${elements.crf.value || '30'}`,
+      `preset=${elements.preset.value}`,
+      `tune=${elements.tune.value}`
+    ];
 
-    // CRF
-    params.push(`crf=${elements.crf.value || '30'}`);
+    if (elements.scm.value !== '0') params.push(`scm=${elements.scm.value}`);
+    if (elements.keyframeInterval.value.trim()) params.push(`keyint=${elements.keyframeInterval.value.trim()}`);
+    if (elements.enableOverlays.checked) params.push('enable-overlays=1');
+    if (elements.scd.checked) params.push('scd=1');
 
-    // Preset
-    params.push(`preset=${elements.preset.value}`);
-
-    // Tune
-    params.push(`tune=${elements.tune.value}`);
-
-    // Screen content mode
-    if (elements.scm.value !== '0') {
-      params.push(`scm=${elements.scm.value}`);
-    }
-
-    // Keyframe interval
-    if (elements.keyframeInterval.value.trim()) {
-      params.push(`keyint=${elements.keyframeInterval.value.trim()}`);
-    }
-
-    // Enable overlays
-    if (elements.enableOverlays.checked) {
-      params.push('enable-overlays=1');
-    }
-
-    // Scene change detection
-    if (elements.scd.checked) {
-      params.push('scd=1');
-    }
-
-    // Additional parameters
-    if (elements.extraParams.value.trim()) {
-      let extra = elements.extraParams.value.trim();
-      // Remove leading/trailing colons
-      extra = extra.replace(/^:+|:+$/g, '');
-      if (extra) {
-        params.push(extra);
-      }
-    }
+    const extra = getExtraParams();
+    if (extra) params.push(extra);
 
     return params.join(':');
   }
 
-  /**
-   * Generate encoding metadata comment
-   */
   function generateEncodingComment() {
-    const encodingInfo = [];
-
-    encodingInfo.push(`SVT-AV1 CRF${elements.crf.value || '30'}`);
-    encodingInfo.push(`preset ${elements.preset.value}`);
-
-    if (elements.extraParams.value.trim()) {
-      let extra = elements.extraParams.value.trim().replace(/^:+|:+$/g, '');
-      if (extra) {
-        encodingInfo.push(`params: ${extra}`);
-      }
-    }
-
-    return 'Encoded with ' + encodingInfo.join(', ');
+    const info = [`SVT-AV1 CRF${elements.crf.value || '30'}`, `preset ${elements.preset.value}`];
+    const extra = getExtraParams();
+    if (extra) info.push(`params: ${extra}`);
+    return 'Encoded with ' + info.join(', ');
   }
 
-  /**
-   * Build metadata options
-   */
   function buildMetadataOptions() {
-    const metadata = {};
-
-    if (elements.metadataTitle.value.trim()) {
-      metadata.title = elements.metadataTitle.value;
-    }
-
-    if (elements.metadataDescription.value.trim()) {
-      metadata.description = elements.metadataDescription.value;
-    }
-
-    // Use comment override if provided, otherwise auto-generate encoding info
-    if (elements.metadataCommentOverride.value.trim()) {
-      metadata.comment = elements.metadataCommentOverride.value;
-    } else {
-      metadata.comment = generateEncodingComment();
-    }
-
-    const custom = {};
-    if (elements.metadataDate.value.trim()) {
-      custom.date_released = elements.metadataDate.value.trim();
-    }
-
-    return FFmpegFormGenerator.command.buildMetadata({
+    const commentOverride = elements.metadataCommentOverride.value.trim();
+    return FF.command.buildMetadata({
       removeExisting: elements.removeMetadata.checked,
-      title: metadata.title,
-      description: metadata.description,
-      comment: metadata.comment,
-      custom: Object.keys(custom).length > 0 ? custom : null
+      title: elements.metadataTitle.value,
+      description: elements.metadataDescription.value,
+      comment: commentOverride || generateEncodingComment(),
+      custom: elements.metadataDate.value.trim() ? { date_released: elements.metadataDate.value.trim() } : null
     });
   }
 
-  /**
-   * Update FFmpeg command
-   */
   function updateCommand() {
-    const inPointValue = FFmpegFormGenerator.command.formatTime(elements.inPoint.value);
-    const outPointValue = FFmpegFormGenerator.command.formatTime(elements.outPoint.value);
-
-    // Validation
-    let errorMessage = '';
     if (!elements.inputFile.value) {
-      errorMessage = 'Please specify an input file.';
-    } else if (!elements.outputFilename.value) {
-      errorMessage = 'Please specify an output file.';
-    }
-
-    if (errorMessage) {
-      FFmpegFormGenerator.ui.showError(elements.output, errorMessage);
+      FF.ui.showError(elements.output, 'Please specify an input file.');
       return;
     }
-
-    FFmpegFormGenerator.ui.clearError(elements.output);
-
-    // Build command parts
-    const commandParts = ['ffmpeg'];
-
-    // Input timing
-    if (inPointValue) {
-      commandParts.push(`-ss ${inPointValue}`);
+    if (!elements.outputFilename.value) {
+      FF.ui.showError(elements.output, 'Please specify an output file.');
+      return;
     }
-    if (outPointValue) {
-      commandParts.push(`-to ${outPointValue}`);
-    }
+    FF.ui.clearError(elements.output);
 
-    // Input file
-    commandParts.push(`-i "${elements.inputFile.value}"`);
+    const parts = ['ffmpeg'];
 
-    // Video codec and SVT-AV1 parameters
-    commandParts.push(`-c:v libsvtav1`);
-    commandParts.push(`-svtav1-params "${buildSvtAv1Params()}"`);
+    parts.push(FF.command.buildCommonOptions({
+      input: elements.inputFile.value,
+      startTime: elements.inPoint.value,
+      endTime: elements.outPoint.value
+    }));
 
-    // Video filter
-    if (elements.videoFilter.value.trim()) {
-      commandParts.push(`-vf "${elements.videoFilter.value.trim()}"`);
-    }
+    parts.push('-c:v libsvtav1');
+    parts.push(`-svtav1-params "${buildSvtAv1Params()}"`);
 
-    // Audio
-    if (elements.audioBitrate.value !== '' && elements.audioBitrate.value !== '0') {
-      commandParts.push(`-c:a libopus -b:a ${elements.audioBitrate.value}k`);
-    } else {
-      commandParts.push('-an');
-    }
+    parts.push(FF.command.buildFilter(elements.videoFilter.value));
 
-    // Metadata
-    const metadata = buildMetadataOptions();
-    if (metadata) {
-      commandParts.push(metadata);
-    }
+    const audioBitrate = elements.audioBitrate.value;
+    parts.push(audioBitrate !== '' && audioBitrate !== '0' ? `-c:a libopus -b:a ${audioBitrate}k` : '-an');
 
-    // Additional options
-    if (elements.additionalOptions.value.trim()) {
-      commandParts.push(elements.additionalOptions.value.trim());
-    }
+    parts.push(buildMetadataOptions());
 
-    // Output file
-    commandParts.push(`"${elements.outputFilename.value}"`);
+    if (elements.additionalOptions.value.trim()) parts.push(elements.additionalOptions.value.trim());
 
-    const fullCommand = commandParts.join(' ');
-    elements.output.textContent = fullCommand;
+    parts.push(`"${elements.outputFilename.value}"`);
 
-    // Save state
-    FFmpegFormGenerator.storage.saveAllInputs(elements);
+    elements.output.textContent = parts.filter(Boolean).join(' ');
+    FF.storage.saveAllInputs(elements);
   }
 
-  /**
-   * Restore input values from sessionStorage
-   */
   function restoreInputValues() {
-    const defaults = {
+    FF.storage.restoreAllInputs(elements, {
       crf: '30',
       preset: '6',
       tune: '0',
       scm: '0',
       enableOverlays: true,
       scd: true
-    };
-
-    FFmpegFormGenerator.storage.restoreAllInputs(elements, defaults);
+    });
   }
 
-  /**
-   * Set up event listeners
-   */
   function setupEventListeners() {
-    // Set up all form inputs to trigger command update
-    FFmpegFormGenerator.events.setupFormInputs(
-      elements,
-      updateCommand,
-      null  // We handle saving in updateCommand
-    );
-
-    // Set up copy button
-    FFmpegFormGenerator.events.setupCopyButton(
-      elements.copyButton,
-      elements.output,
-      elements.copyStatus
-    );
+    FF.events.setupFormInputs(elements, updateCommand);
+    FF.events.setupCopyButton(elements.copyButton, elements.output, elements.copyStatus);
   }
 
-  /**
-   * Handle reset form button
-   */
   function handleResetForm() {
     if (confirm('Reset all form fields? This cannot be undone.')) {
-      FFmpegFormGenerator.storage.clearAll();
+      FF.storage.clearAll();
       location.reload();
     }
   }
 
-  /**
-   * Initialize application
-   */
   function init() {
-    // Set namespace for storage isolation
-    FFmpegFormGenerator.storage.setNamespace('av1-wizard');
+    FF.storage.setNamespace('av1-wizard');
 
-    // Set up reset button
     const resetButton = document.getElementById('resetForm');
-    if (resetButton) {
-      resetButton.addEventListener('click', handleResetForm);
-    }
+    if (resetButton) resetButton.addEventListener('click', handleResetForm);
 
     restoreInputValues();
     setupEventListeners();
     updateCommand();
   }
 
-  // Start when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {

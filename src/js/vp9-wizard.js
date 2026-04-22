@@ -1,12 +1,11 @@
 /**
- * VP9 Wizard
- * Generate FFmpeg commands for creating VP9-encoded videos with Opus audio
- * Uses 2-pass encoding for optimal quality
+ * VP9 Wizard — generates 2-pass FFmpeg commands for VP9 + Opus in WebM/MKV.
  */
-(function() {
+(function () {
   'use strict';
 
-  // DOM element references
+  const FF = FFmpegFormGenerator;
+
   const elements = {
     inPoint: document.getElementById('inPoint'),
     inputFile: document.getElementById('inputFile'),
@@ -30,197 +29,91 @@
     metadataDate: document.getElementById('metadataDate')
   };
 
-  /**
-   * Build metadata options for second pass
-   */
   function buildMetadataOptions() {
-    return FFmpegFormGenerator.command.buildMetadata({
+    return FF.command.buildMetadata({
       removeExisting: elements.removeMetadata.checked,
       title: elements.metadataTitle.value,
       description: elements.metadataDescription.value,
       comment: elements.metadataComment.value,
-      custom: elements.metadataDate.value ? {
-        date_released: elements.metadataDate.value.trim()
-      } : null
+      custom: elements.metadataDate.value.trim()
+        ? { date_released: elements.metadataDate.value.trim() }
+        : null
     });
   }
 
-  /**
-   * Update FFmpeg command
-   */
   function updateCommand() {
-    const inPointValue = FFmpegFormGenerator.command.formatTime(elements.inPoint.value);
-    const outPointValue = FFmpegFormGenerator.command.formatTime(elements.outPoint.value);
-
-    const options = {
-      inPoint: inPointValue ? `-ss ${inPointValue}` : '',
-      outPoint: outPointValue ? `-to ${outPointValue}` : '',
-      inputFile: elements.inputFile.value ? `-i "${elements.inputFile.value}"` : '',
-      crf: `-crf ${elements.crf.value || '32'}`,
-      keyframeInterval: elements.keyframeInterval.value ? `-g ${elements.keyframeInterval.value}` : '',
-      videoFilter: elements.videoFilter.value ? `-vf "${elements.videoFilter.value}"` : '',
-      audioBitrate: elements.audioBitrate.value !== '' && elements.audioBitrate.value !== '0'
-        ? `-c:a libopus -b:a ${elements.audioBitrate.value}k`
-        : '-an',
-      additionalOptions: elements.additionalOptions.value || '',
-      additionalOptions2: elements.additionalOptions2.value || '',
-      outputFilename: elements.outputFilename.value ? `"${elements.outputFilename.value}"` : '',
-      metadata: buildMetadataOptions()
-    };
-
-    // Validation
-    let errorMessage = '';
     if (!elements.inputFile.value) {
-      errorMessage = 'Please specify an input file.';
-    } else if (!elements.outputFilename.value) {
-      errorMessage = 'Please specify an output file.';
-    }
-
-    if (errorMessage) {
-      FFmpegFormGenerator.ui.showError(elements.output, errorMessage);
+      FF.ui.showError(elements.output, 'Please specify an input file.');
       return;
     }
-
-    FFmpegFormGenerator.ui.clearError(elements.output);
-
-    // Get selected null output
-    const selectedNullOutput = document.querySelector('input[name="nullOutput"]:checked').value;
-
-    // Build pass 1 command
-    const pass1Options = [
-      options.inPoint,
-      options.outPoint,
-      options.inputFile,
-      '-c:v libvpx-vp9',
-      options.crf,
-      '-b:v 0',
-      options.keyframeInterval,
-      options.videoFilter,
-      '-an',
-      options.additionalOptions,
-      '-pass 1',
-      `-f null ${selectedNullOutput}`
-    ].filter(Boolean);
-
-    // Build pass 2 command
-    const pass2Options = [
-      options.inPoint,
-      options.outPoint,
-      options.inputFile,
-      '-c:v libvpx-vp9',
-      options.crf,
-      '-b:v 0',
-      options.keyframeInterval,
-      options.videoFilter,
-      options.audioBitrate,
-      options.metadata,
-      options.additionalOptions,
-      options.additionalOptions2,
-      '-pass 2',
-      options.outputFilename
-    ].filter(Boolean);
-
-    const pass1Command = `ffmpeg ${pass1Options.join(' ')}`;
-    const pass2Command = `ffmpeg ${pass2Options.join(' ')}`;
-
-    const fullCommand = `${pass1Command} && ${pass2Command}`;
-    elements.output.textContent = fullCommand;
-
-    // Save state
-    saveInputValues();
-  }
-
-  /**
-   * Save input values to session storage
-   */
-  function saveInputValues() {
-    FFmpegFormGenerator.storage.saveAllInputs(elements);
-
-    // Save null output selection
-    const selectedNullOutput = document.querySelector('input[name="nullOutput"]:checked')?.value;
-    if (selectedNullOutput) {
-      FFmpegFormGenerator.storage.save('nullOutput', selectedNullOutput);
+    if (!elements.outputFilename.value) {
+      FF.ui.showError(elements.output, 'Please specify an output file.');
+      return;
     }
+    FF.ui.clearError(elements.output);
+
+    const common = FF.command.buildCommonOptions({
+      input: elements.inputFile.value,
+      startTime: elements.inPoint.value,
+      endTime: elements.outPoint.value
+    });
+
+    const crf = `-crf ${elements.crf.value || '32'}`;
+    const keyframe = elements.keyframeInterval.value ? `-g ${elements.keyframeInterval.value}` : '';
+    const videoFilter = FF.command.buildFilter(elements.videoFilter.value);
+    const audio = elements.audioBitrate.value !== '' && elements.audioBitrate.value !== '0'
+      ? `-c:a libopus -b:a ${elements.audioBitrate.value}k`
+      : '-an';
+    const nullOutput = elements.nullOutputWindows.checked ? 'NUL' : '/dev/null';
+    const extra1 = elements.additionalOptions.value || '';
+    const extra2 = elements.additionalOptions2.value || '';
+
+    const pass1 = [
+      'ffmpeg', common, '-c:v libvpx-vp9', crf, '-b:v 0', keyframe, videoFilter,
+      '-an', extra1, '-pass 1', `-f null ${nullOutput}`
+    ].filter(Boolean).join(' ');
+
+    const pass2 = [
+      'ffmpeg', common, '-c:v libvpx-vp9', crf, '-b:v 0', keyframe, videoFilter,
+      audio, buildMetadataOptions(), extra1, extra2, '-pass 2', `"${elements.outputFilename.value}"`
+    ].filter(Boolean).join(' ');
+
+    elements.output.textContent = `${pass1} && ${pass2}`;
+    FF.storage.saveAllInputs(elements);
   }
 
-  /**
-   * Restore input values from sessionStorage
-   */
   function restoreInputValues() {
-    const defaults = {
-      crf: '32'
-    };
-
-    FFmpegFormGenerator.storage.restoreAllInputs(elements, defaults);
-
-    // Restore null output with OS detection
-    const storedNullOutput = FFmpegFormGenerator.storage.restore('nullOutput');
-
-    if (storedNullOutput) {
-      if (storedNullOutput === 'NUL') {
-        elements.nullOutputWindows.checked = true;
-      } else if (storedNullOutput === '/dev/null') {
-        elements.nullOutputLinux.checked = true;
-      }
-    } else {
-      // Auto-detect OS
-      const detectedOS = FFmpegFormGenerator.ui.detectOS();
-      if (detectedOS === 'Windows') {
-        elements.nullOutputWindows.checked = true;
-      } else {
-        elements.nullOutputLinux.checked = true;
-      }
-    }
+    const isWindows = FF.ui.detectOS() === 'Windows';
+    FF.storage.restoreAllInputs(elements, {
+      crf: '32',
+      nullOutputWindows: isWindows,
+      nullOutputLinux: !isWindows
+    });
   }
 
-  /**
-   * Set up event listeners
-   */
   function setupEventListeners() {
-    // Set up all form inputs to trigger command update and save
-    FFmpegFormGenerator.events.setupFormInputs(
-      elements,
-      updateCommand,
-      null  // We handle saving in updateCommand
-    );
-
-    // Set up copy button
-    FFmpegFormGenerator.events.setupCopyButton(
-      elements.copyButton,
-      elements.output,
-      elements.copyStatus
-    );
+    FF.events.setupFormInputs(elements, updateCommand);
+    FF.events.setupCopyButton(elements.copyButton, elements.output, elements.copyStatus);
   }
 
-  /**
-   * Handle reset form button
-   */
   function handleResetForm() {
     if (confirm('Reset all form fields? This cannot be undone.')) {
-      FFmpegFormGenerator.storage.clearAll();
+      FF.storage.clearAll();
       location.reload();
     }
   }
 
-  /**
-   * Initialize application
-   */
   function init() {
-    // Set namespace for storage isolation
-    FFmpegFormGenerator.storage.setNamespace('vp9-wizard');
+    FF.storage.setNamespace('vp9-wizard');
 
-    // Set up reset button
     const resetButton = document.getElementById('resetForm');
-    if (resetButton) {
-      resetButton.addEventListener('click', handleResetForm);
-    }
+    if (resetButton) resetButton.addEventListener('click', handleResetForm);
 
     restoreInputValues();
     setupEventListeners();
     updateCommand();
   }
 
-  // Start when DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
