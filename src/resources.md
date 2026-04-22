@@ -39,7 +39,6 @@ The best place to start for comprehensive FFmpeg information:
 ### Video Tutorials
 
 - **[FFmpeg Official Tutorial](https://ffmpeg.org/ffmpeg-all.html#Tutorial)** - Official beginner's tutorial
-- **[FFmpeg YouTube Channel](https://www.youtube.com/@FFmpeg-official)** - Official FFmpeg channel
 
 ### Books and In-Depth Guides
 
@@ -56,19 +55,12 @@ The best place to start for comprehensive FFmpeg information:
 ### Video Technology
 
 - **[Digital Video Introduction](https://github.com/leandromoreira/digital_video_introduction)** - Excellent introduction to digital video concepts
-- **[Video Dev](https://videodev.io/)** - Modern video technology and codec information
 
 ## Tools & Utilities
 
 - **[MediaInfo](https://mediaarea.net/en/MediaInfo)** - Detailed technical information about video and audio files
 - **[FFprobe](https://ffmpeg.org/ffprobe.html)** - FFmpeg's multimedia stream analyzer
 - **[HandBrake](https://handbrake.fr/)** - Popular open-source video transcoder with GUI
-
-## Community & Support
-
-- **[FFmpeg Mailing Lists](https://ffmpeg.org/contact.html#MailingLists)** - Official FFmpeg mailing lists for discussion and support
-- **[FFmpeg IRC](https://ffmpeg.org/contact.html#IRCChannels)** - Real-time chat support on IRC
-- **[Stack Overflow - FFmpeg Tag](https://stackoverflow.com/questions/tagged/ffmpeg)** - Community Q&A for FFmpeg questions
 
 ## Contributing
 
