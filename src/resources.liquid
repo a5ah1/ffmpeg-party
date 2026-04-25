@@ -1,0 +1,303 @@
+---
+layout: base.liquid
+title: Resources — ffmpeg.party
+description: Curated external resources and references for learning FFmpeg
+permalink: /resources/
+---
+
+<div class="page-head">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">~/</a><span class="sep">/</span><span class="cur">resources</span>
+  </nav>
+  <h1 class="page-title">External <span class="accent">resources</span></h1>
+  <p class="page-sub">$ ls -la /external — links worth bookmarking, organized by topic.</p>
+</div>
+
+<div class="resources-layout">
+  <aside class="aside" aria-label="Categories">
+    <h4>categories</h4>
+    <ul>
+      <li><a href="#official">→ official docs</a></li>
+      <li><a href="#community">→ community</a></li>
+      <li><a href="#codecs">→ codec docs</a></li>
+      <li><a href="#learning">→ learning</a></li>
+      <li><a href="#technical">→ technical refs</a></li>
+      <li><a href="#tools">→ tools &amp; utilities</a></li>
+    </ul>
+    <div class="divider"></div>
+    <h4>note</h4>
+    <div style="color: var(--ink-3); font-size: 11px; line-height: 1.5;">
+      External links open in a new tab. Not affiliated with any of these sites; just things I keep coming back to.
+    </div>
+  </aside>
+
+  <div class="resources-body">
+
+    <section class="rescat" id="official">
+      <header class="rescat__head">
+        <div>
+          <div class="section__meta"><span class="num">[ 01 ]</span><span>official_</span></div>
+          <h2 class="rescat__title">Official FFmpeg documentation</h2>
+        </div>
+      </header>
+      <div class="reslist">
+        <a class="resitem" href="https://ffmpeg.org/documentation.html" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">FFmpeg official documentation <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">ffmpeg.org/documentation.html</div>
+            <div class="resitem__desc">The canonical reference. Complete, dense, the ultimate source of truth.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">DOCS</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://trac.ffmpeg.org/wiki" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">FFmpeg Wiki <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">trac.ffmpeg.org/wiki</div>
+            <div class="resitem__desc">Community-maintained wiki with practical guides and tutorials.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">WIKI</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://ffmpeg.org/ffmpeg.html" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">FFmpeg command-line reference <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">ffmpeg.org/ffmpeg.html</div>
+            <div class="resitem__desc">Detailed reference for the <code>ffmpeg</code> CLI itself, every flag.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">CLI</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="rescat" id="community">
+      <header class="rescat__head">
+        <div>
+          <div class="section__meta"><span class="num">[ 02 ]</span><span>community_</span></div>
+          <h2 class="rescat__title">Community resources</h2>
+        </div>
+      </header>
+      <div class="reslist">
+        <a class="resitem" href="https://amiaopensource.github.io/ffmprovisr/" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">ffmprovisr <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">amiaopensource.github.io/ffmprovisr</div>
+            <div class="resitem__desc">A fantastic recipe collection from media archivists and preservation specialists. Tested commands for common workflows.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">RECIPES</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://blog.programster.org/ffmpeg-create-smooth-videos-with-frame-interpolation" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">Smooth video with frame interpolation <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">blog.programster.org/…frame-interpolation</div>
+            <div class="resitem__desc">Tutorial on using FFmpeg's <code>minterpolate</code> filter to generate higher-framerate video from existing frames.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">TUTORIAL</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://gist.github.com/BlueSwordM/86dfcb6ab38a93a524472a0cbe4c4100" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">BlueSwordM's SVT-AV1 guide <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">gist.github.com/BlueSwordM</div>
+            <div class="resitem__desc">A practical beginner's guide to AV1 encoding with SVT-AV1. Essential parameters, preset selection, and optimization tips for live-action and anime.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">GUIDE</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="rescat" id="codecs">
+      <header class="rescat__head">
+        <div>
+          <div class="section__meta"><span class="num">[ 03 ]</span><span>codecs_</span></div>
+          <h2 class="rescat__title">Codec documentation</h2>
+        </div>
+      </header>
+      <div class="reslist">
+        <a class="resitem" href="https://trac.ffmpeg.org/wiki/Encode/H.264" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">x264 / H.264 encoding guide <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">trac.ffmpeg.org/wiki/Encode/H.264</div>
+            <div class="resitem__desc">FFmpeg Wiki guide for H.264/AVC encoding parameters and presets.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">WIKI</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://trac.ffmpeg.org/wiki/Encode/H.265" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">x265 / H.265 encoding guide <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">trac.ffmpeg.org/wiki/Encode/H.265</div>
+            <div class="resitem__desc">FFmpeg Wiki guide for H.265/HEVC encoding.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">WIKI</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://trac.ffmpeg.org/wiki/Encode/VP9" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">VP9 encoding guide <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">trac.ffmpeg.org/wiki/Encode/VP9</div>
+            <div class="resitem__desc">FFmpeg Wiki guide for VP9 encoding.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">WIKI</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://trac.ffmpeg.org/wiki/Encode/AV1" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">AV1 encoding guide <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">trac.ffmpeg.org/wiki/Encode/AV1</div>
+            <div class="resitem__desc">FFmpeg Wiki guide for AV1 encoding.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">WIKI</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="rescat" id="learning">
+      <header class="rescat__head">
+        <div>
+          <div class="section__meta"><span class="num">[ 04 ]</span><span>learning_</span></div>
+          <h2 class="rescat__title">Learning resources</h2>
+        </div>
+      </header>
+      <div class="reslist">
+        <a class="resitem" href="https://ffmpeg.org/ffmpeg-all.html#Tutorial" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">FFmpeg official tutorial <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">ffmpeg.org/ffmpeg-all.html#Tutorial</div>
+            <div class="resitem__desc">Official beginner's tutorial from the FFmpeg project.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">TUTORIAL</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://www.amazon.com/FFmpeg-Basics-Multimedia-handling-encoder/dp/1479327832" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">FFmpeg Basics (book) <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">FFmpeg Basics by Frantisek Korbel</div>
+            <div class="resitem__desc">Comprehensive book covering FFmpeg fundamentals and multimedia handling.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">BOOK</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://github.com/leandromoreira/digital_video_introduction" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">Digital Video Introduction <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">github.com/leandromoreira/digital_video_introduction</div>
+            <div class="resitem__desc">Excellent gentle introduction to digital video concepts. Worth reading before tweaking encoder flags.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">PRIMER</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="rescat" id="technical">
+      <header class="rescat__head">
+        <div>
+          <div class="section__meta"><span class="num">[ 05 ]</span><span>technical_</span></div>
+          <h2 class="rescat__title">Technical references</h2>
+        </div>
+      </header>
+      <div class="reslist">
+        <a class="resitem" href="https://www.chaneru.com/Roku/HLS/X264_Settings.htm" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">x264 settings reference <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">chaneru.com/Roku/HLS/X264_Settings.htm</div>
+            <div class="resitem__desc">Detailed x264 parameter explanations — useful when the official help text isn't enough.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">REF</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/Docs/README.md" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">SVT-AV1 documentation <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">gitlab.com/AOMediaCodec/SVT-AV1</div>
+            <div class="resitem__desc">Official SVT-AV1 encoder documentation.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">DOCS</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://developers.google.com/media/vp9/settings/vod" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">libvpx VP9 parameters <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">developers.google.com/media/vp9</div>
+            <div class="resitem__desc">Google's VP9 VOD encoding recommendations.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">REF</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="rescat" id="tools">
+      <header class="rescat__head">
+        <div>
+          <div class="section__meta"><span class="num">[ 06 ]</span><span>tools_</span></div>
+          <h2 class="rescat__title">Tools &amp; utilities</h2>
+        </div>
+      </header>
+      <div class="reslist">
+        <a class="resitem" href="https://mediaarea.net/en/MediaInfo" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">MediaInfo <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">mediaarea.net/MediaInfo</div>
+            <div class="resitem__desc">Detailed technical information about video and audio files. The first tool to reach for when something looks off.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">TOOLS</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://ffmpeg.org/ffprobe.html" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">FFprobe <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">ffmpeg.org/ffprobe.html</div>
+            <div class="resitem__desc">FFmpeg's stream analyzer. Inspect everything about a media file from the CLI.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">CLI</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://handbrake.fr/" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">HandBrake <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">handbrake.fr</div>
+            <div class="resitem__desc">Open-source video transcoder with a GUI. Built on top of x264, x265, and other libraries.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">GUI</div>
+          </div>
+        </a>
+        <a class="resitem" href="https://github.com/slhck/ffmpeg-normalize" target="_blank" rel="noopener noreferrer">
+          <div class="resitem__main">
+            <div class="resitem__title">ffmpeg-normalize <span class="resitem__arrow">↗</span></div>
+            <div class="resitem__url">github.com/slhck/ffmpeg-normalize</div>
+            <div class="resitem__desc">Python CLI wrapper that batch-normalizes audio loudness using EBU R128 (two-pass), RMS, or peak modes.</div>
+          </div>
+          <div class="resitem__meta">
+            <div class="resitem__kind">CLI</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </div>
+</div>

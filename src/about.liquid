@@ -1,0 +1,159 @@
+---
+layout: base.liquid
+title: About ffmpeg.party
+description: A personal project providing opinionated FFmpeg tools and guides
+permalink: /about/
+---
+
+<section class="about-hero">
+  <div class="about-hero__bg" aria-hidden="true"></div>
+  <div class="hero__bracket tl" aria-hidden="true"></div>
+  <div class="hero__bracket tr" aria-hidden="true"></div>
+  <div class="hero__bracket bl" aria-hidden="true"></div>
+  <div class="hero__bracket br" aria-hidden="true"></div>
+  <div class="about-hero__inner">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="/">~/</a><span class="sep">/</span><span class="cur">about</span>
+    </nav>
+    <div class="about-hero__prompt">$ cat README.md</div>
+    <h1 class="about-hero__title">About <span class="accent">ffmpeg.party</span></h1>
+    <p class="about-hero__sub">
+      A personal project providing opinionated FFmpeg tools and guides — built by one person, updated whenever something breaks or something cool appears.
+    </p>
+    <div class="about-hero__kv">
+      <div><span>tools</span><b>{{ build.toolCount }}</b></div>
+      <div><span>guides</span><b>{{ build.guideCount }}</b></div>
+      <div><span>license</span><b>MIT / CC BY-NC-SA</b></div>
+      <div><span>updated</span><b>{{ build.date }}</b></div>
+    </div>
+  </div>
+</section>
+
+<div class="about-layout">
+  <article class="about-prose">
+    <h2 data-num="01" id="what">What is ffmpeg.party?</h2>
+    <p>
+      A personal project — a collection of tools and guides for FFmpeg that started as scratch notes on video encoding and grew into something worth sharing.
+    </p>
+    <p>
+      For comprehensive coverage of every option, the <a href="https://ffmpeg.org/documentation.html" target="_blank" rel="noopener noreferrer">official FFmpeg documentation</a> is the canonical reference. This site is more opinionated: it surfaces the tools and settings I think are worth using, not an exhaustive catalog.
+    </p>
+
+    <h2 data-num="02" id="philosophy">Philosophy</h2>
+    <p>
+      Video encoding is full of different approaches and preferences. Rather than pretend there's one "correct" way to do things, this site provides opinionated recommendations based on what I've found works well.
+    </p>
+
+    <h3>Limited options by design</h3>
+    <p>
+      The tools here don't expose every possible FFmpeg parameter because that would be exhausting. They focus on what I consider essential. If you need more control, you're better off learning FFmpeg's command-line syntax directly.
+    </p>
+
+    <h3>Valid commands, not hand-holding</h3>
+    <p>
+      The tools are designed to generate valid FFmpeg commands, but they assume some basic familiarity with video encoding concepts. You're expected to understand what you're doing rather than being walked through every step.
+    </p>
+
+    <h3>Personal preferences</h3>
+    <p>
+      The guides and recommendations reflect my own research and preferences. Your needs may differ, and that's fine. Use what's helpful, ignore what isn't.
+    </p>
+
+    <h2 data-num="03" id="tools">Available tools</h2>
+    <p>The site is organized into a few categories. Everything here is also reachable from the <a href="/">home page</a>.</p>
+
+    <h3>Encoders &amp; generators</h3>
+    <ul>
+      <li><b>VP9 Wizard</b> — VP9 command generator for high-quality videos using 2-pass encoding</li>
+      <li><b>AV1 Wizard</b> — AV1 command generator with SVT-AV1 encoder and optimized parameters</li>
+      <li><b>x264 Wizard</b> — x264 command generator for H.264/AVC encoding with optimized settings</li>
+      <li><b>x265 Wizard</b> — x265 command generator for H.265/HEVC encoding with superior compression</li>
+    </ul>
+
+    <h3>Utilities</h3>
+    <ul>
+      <li><b>Cropper</b> — interactive visual cropper that emits the exact <code>-vf crop=</code> value</li>
+      <li><b>Anamorphic Crop Tool</b> — DVD/broadcast aspect math without the spreadsheet</li>
+      <li><b>Frame Interpolation</b> — generate motion-interpolated frames with <code>minterpolate</code></li>
+      <li><b>Duration Calculator</b> — calculate durations between timestamps for FFmpeg commands</li>
+      <li><b>WebM from Image Sequence</b> — convert image sequences to WebM (legacy tool)</li>
+    </ul>
+
+    <h3>Guides</h3>
+    <ul>
+      <li><b>x264 Encoder Guide</b> — recommended settings, CRF tables, and parameter examples</li>
+      <li><b>x265 Encoder Guide</b> — encoder reference for H.265/HEVC</li>
+      <li><b>AV1 Encoder Guide</b> — SVT-AV1 settings and tradeoffs</li>
+    </ul>
+
+    <h2 data-num="04" id="not">What this site is not</h2>
+    <p>A few things worth being explicit about:</p>
+    <ul>
+      <li><b>Not affiliated with the FFmpeg project.</b> ffmpeg.party is an independent fan resource. The FFmpeg developers don't endorse anything here, and any mistakes are mine.</li>
+      <li><b>Not a substitute for the docs.</b> When tools and guides here conflict with the official docs, the docs are right.</li>
+      <li><b>Not a tutorial site.</b> If you've never used a command line before, start with a beginner FFmpeg tutorial. The tools here assume you know what you're doing.</li>
+      <li><b>Not stable.</b> I revise parameters and reorganize pages whenever something better comes along. URLs may change.</li>
+    </ul>
+
+    <div class="callout">
+      <b>Note —</b> if you copy a command from this site, read it before you run it. Verify paths, double-check output filenames, and don't blindly paste anything into a terminal. This goes for any command on the internet, not just mine.
+    </div>
+
+    <h2 data-num="05" id="how">How to use this site</h2>
+    <p>
+      Pick a tool or guide, fill in the form, copy the generated command, and run it. Inputs are saved in your browser's session storage for convenience — no accounts, no cloud, no tracking.
+    </p>
+
+    <h3>What's included</h3>
+    <ul>
+      <li><b>Session persistence</b> — form inputs are saved locally so you can revisit later</li>
+      <li><b>Copy to clipboard</b> — quick copying of generated commands</li>
+      <li><b>Dark mode</b> — permanent dark interface (because it's objectively better)</li>
+      <li><b>Mobile friendly</b> — works on phones and tablets, even if desktop is the primary target</li>
+    </ul>
+
+    <h3>Technical details</h3>
+    <p>
+      Built with <a href="https://www.11ty.dev/" target="_blank" rel="noopener noreferrer">Eleventy</a> and hand-written CSS. Plain JavaScript, no frameworks. Deployed as a static site because it's simple and fast.
+    </p>
+
+    <h2 data-num="06" id="contact">Get in touch</h2>
+    <p>
+      Bug reports, suggestions, and corrections are all welcome on the issue tracker.
+    </p>
+    <ul>
+      <li><b>Issues &amp; suggestions</b> — <a href="https://github.com/a5ah1/ffmpeg-party/issues" target="_blank" rel="noopener noreferrer">github.com/a5ah1/ffmpeg-party/issues</a></li>
+      <li><b>Source code</b> — <a href="https://github.com/a5ah1/ffmpeg-party" target="_blank" rel="noopener noreferrer">github.com/a5ah1/ffmpeg-party</a></li>
+    </ul>
+
+    <h3>Disclaimer</h3>
+    <p>
+      Not affiliated with the FFmpeg project. FFmpeg is a trademark of Fabrice Bellard. For official resources, visit <a href="https://ffmpeg.org/" target="_blank" rel="noopener noreferrer">ffmpeg.org</a>.
+    </p>
+  </article>
+
+  <aside class="aside" aria-label="Page contents">
+    <h4>contents</h4>
+    <ul>
+      <li><a href="#what">→ §01 What is this</a></li>
+      <li><a href="#philosophy">→ §02 Philosophy</a></li>
+      <li><a href="#tools">→ §03 Available tools</a></li>
+      <li><a href="#not">→ §04 What this isn't</a></li>
+      <li><a href="#how">→ §05 How to use it</a></li>
+      <li><a href="#contact">→ §06 Get in touch</a></li>
+    </ul>
+    <div class="divider"></div>
+    <h4>quick links</h4>
+    <ul>
+      <li><a href="/">→ home</a></li>
+      <li><a href="/resources/">→ resources</a></li>
+      <li><a href="/blog/">→ blog</a></li>
+    </ul>
+    <div class="divider"></div>
+    <h4>cite</h4>
+    <div style="color: var(--ink-3); font-size: 10px; line-height: 1.5;">
+      ffmpeg.party/about<br>
+      updated {{ build.date }}
+    </div>
+  </aside>
+</div>

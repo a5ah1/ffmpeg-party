@@ -2,31 +2,40 @@
 layout: base.liquid
 ---
 
-<article class="max-w-3xl mx-auto px-4 py-12">
-  <!-- Post Header -->
-  <header class="mb-8">
-    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
-      {{ title }}
-    </h1>
-    <div class="flex items-center gap-4 text-zinc-400">
-      <time datetime="{{ date | date: '%Y-%m-%d' }}" class="text-teal-400">
-        {{ date | date: "%B %d, %Y" }}
-      </time>
-      {% if author %}
-      <span>by {{ author }}</span>
-      {% endif %}
-    </div>
-  </header>
-
-  <!-- Post Content -->
-  <div class="prose">
-    {{ content }}
+<div class="page-head">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <a href="/">~/</a><span class="sep">/</span><a href="/blog/">blog</a><span class="sep">/</span><span class="cur">{{ page.fileSlug }}</span>
+  </nav>
+  <div style="font-family: var(--fs-mono); font-size: 11px; color: var(--teal); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px;">
+    [ POST · {{ date | date: "%Y-%m-%d" }} ]
   </div>
+  <h1 class="page-title">{{ title }}</h1>
+  {% if description %}
+    <p class="page-sub">{{ description }}</p>
+  {% endif %}
+</div>
 
-  <!-- Back to Blog Link -->
-  <footer class="mt-12 pt-8 border-t border-zinc-700">
-    <a href="/blog/" class="text-teal-400 hover:text-teal-300 transition-colors">
-      ← Back to Blog
-    </a>
-  </footer>
-</article>
+<div class="guide-layout">
+  <div></div>
+  <article class="guide-prose">
+    {{ content }}
+    <div style="margin-top: 48px; padding-top: 24px; border-top: 1px dashed var(--line); font-family: var(--fs-mono); font-size: 12px; color: var(--ink-3);">
+      <a href="/blog/">← back to blog</a>
+    </div>
+  </article>
+  <aside class="aside" aria-label="Post meta">
+    <h4>posted</h4>
+    <div style="color: var(--ink-1); font-size: 12px;">{{ date | date: "%B %-d, %Y" }}</div>
+    {% if author %}
+      <div class="divider"></div>
+      <h4>by</h4>
+      <div style="color: var(--ink-1); font-size: 12px;">{{ author }}</div>
+    {% endif %}
+    <div class="divider"></div>
+    <h4>elsewhere</h4>
+    <ul>
+      <li><a href="/blog/">→ all posts</a></li>
+      <li><a href="/">→ home</a></li>
+    </ul>
+  </aside>
+</div>

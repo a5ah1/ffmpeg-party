@@ -1,0 +1,45 @@
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__grid">
+      <div>
+        <pre class="footer__ascii">  ┌─[ ffmpeg.party ]────────────────┐
+  │  ░▒▓█  welcome to the party  █▓▒░ │
+  └────────────────────────────────────┘</pre>
+        <p class="footer__intro">
+          An informal collection of FFmpeg generators and guides. Side project. Not affiliated with the FFmpeg project.
+        </p>
+      </div>
+      <div>
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="/tools/vp9-wizard/">vp9-wizard</a></li>
+          <li><a href="/tools/av1-wizard/">av1-wizard</a></li>
+          <li><a href="/tools/x264-wizard/">x264-wizard</a></li>
+          <li><a href="/tools/x265-wizard/">x265-wizard</a></li>
+          <li><a href="/tools/cropper/">cropper</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Guides</h4>
+        <ul>
+          <li><a href="/guides/x264/">x264</a></li>
+          <li><a href="/guides/x265/">x265</a></li>
+          <li><a href="/guides/av1/">av1</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Etc</h4>
+        <ul>
+          <li><a href="/resources/">resources</a></li>
+          <li><a href="/blog/">blog</a></li>
+          <li><a href="/about/">about</a></li>
+          <li><a href="https://github.com/a5ah1/ffmpeg-party" target="_blank" rel="noopener noreferrer">source ↗</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© {{ build.date | slice: 0, 4 }} ffmpeg.party — code MIT, content CC BY-NC-SA 4.0</span>
+      <span>last build {{ build.date }} · {{ build.time }}</span>
+    </div>
+  </div>
+</footer>

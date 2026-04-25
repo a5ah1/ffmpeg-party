@@ -21,7 +21,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('src/robots.txt');
 
   // Watch CSS files for changes
-  eleventyConfig.addWatchTarget('src/css/output.css');
+  eleventyConfig.addWatchTarget('src/css/site.css');
   eleventyConfig.addWatchTarget('src/css/cropper.css');
   eleventyConfig.addWatchTarget('src/css/anamorphic-crop.css');
 

@@ -1,81 +1,58 @@
 ---
-layout: page.liquid
-title: Cropper
-description: Visual tool for creating FFmpeg crop filters
+layout: tool.liquid
+title: Visual cropper
+description: Interactive visual tool for creating FFmpeg crop filter values
+permalink: /tools/cropper/
+toolNumber: T/05
 ---
 
-# Visual FFmpeg Crop Filter Generator
+<div class="basic-page">
+  <div class="notice" style="margin-bottom: 28px;">
+    <span class="ico" aria-hidden="true">⚠</span>
+    <span>The cropper opens in a new tab and uses a full-screen interface optimized for desktop. It works best on larger screens.</span>
+  </div>
 
-An interactive tool for visually creating FFmpeg crop filters. Load an image, drag to adjust the crop region, and get the exact `crop` filter parameters you need.
+  <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 36px;">
+    <a href="/tools/cropper/app/" target="_blank" rel="noopener noreferrer" class="btn primary">[ launch cropper ↗ ]</a>
+  </div>
 
-<div class="my-8">
-  <a href="/tools/cropper/app/" target="_blank" rel="noopener noreferrer" class="tool-launch-button">
-    Launch Cropper (Opens in New Tab)
-  </a>
+  <article class="about-prose">
+    <h2>What it does</h2>
+    <p>Drag a frame from your video onto the canvas, position the crop region visually, and the tool emits the exact <code>-vf crop=…</code> value you can paste into any encoding command.</p>
+
+    <h2>Features</h2>
+    <ul>
+      <li><b>Visual interface</b> — see exactly what you're cropping</li>
+      <li><b>Drag to adjust</b> — click and drag the crop region to reposition</li>
+      <li><b>Precise controls</b> — pixel-level dimension and offset inputs</li>
+      <li><b>Step alignment</b> — snap dimensions to 2/4/8/16/32/64 for codec compatibility</li>
+      <li><b>Customizable mask</b> — adjust mask color and opacity</li>
+      <li><b>One-click copy</b> — copy the generated filter to your clipboard</li>
+    </ul>
+
+    <h2>How to use it</h2>
+    <ol style="padding-left: 22px;">
+      <li>Launch the cropper using the button above</li>
+      <li>Drag and drop a frame from your video (or any image) onto the canvas</li>
+      <li>Adjust the crop region — width/height inputs, X/Y inputs, or drag directly</li>
+      <li>Choose step alignment (useful for codec requirements)</li>
+      <li>Click <b>Copy</b> to get the crop filter value</li>
+    </ol>
+
+    <h2>Crop filter syntax</h2>
+    <p>The FFmpeg <code>crop</code> filter removes unwanted portions of video. Basic syntax:</p>
+    <p><code>crop=w=WIDTH:h=HEIGHT:x=X_OFFSET:y=Y_OFFSET</code></p>
+    <p>Example: <code>ffmpeg -i input.mp4 -vf "crop=w=1920:h=800:x=0:y=140" output.mp4</code> — crops to 1920×800, removing 140 pixels from the top.</p>
+
+    <h2>Why step alignment matters</h2>
+    <p>Many video codecs work more efficiently when dimensions are divisible by 2, 8, or 16. Using step alignment can improve encoding efficiency, prevent compatibility issues, and avoid codec warnings.</p>
+
+    <h2>Tips</h2>
+    <ul>
+      <li><b>Get a frame first</b> — extract one with <code>ffmpeg -i input.mp4 -ss 00:01:00 -frames:v 1 frame.png</code></li>
+      <li><b>Check aspect ratio</b> — make sure your crop maintains the ratio you want</li>
+      <li><b>Test on a short clip</b> before processing the full video</li>
+      <li><b>Watch the borders</b> — ensure the crop doesn't include black bars or unwanted edges</li>
+    </ul>
+  </article>
 </div>
-
-<div class="bg-zinc-900 border border-zinc-700 rounded-lg p-4 my-6">
-  <p class="text-sm text-zinc-300 !mb-0">
-    <strong>Note:</strong> The cropper opens in a new tab and uses a full-screen interface optimized for desktop use. It works best on larger screens.
-  </p>
-</div>
-
-## Features
-
-- **Visual Interface**: See exactly what you're cropping
-- **Drag to Adjust**: Click and drag the crop region to reposition
-- **Precise Controls**: Set exact dimensions and offsets with pixel-level accuracy
-- **Step Alignment**: Align crop dimensions to common values (2, 4, 8, 16, 32, 64 pixels) for codec compatibility
-- **Customizable Mask**: Adjust mask color and opacity to suit your needs
-- **One-Click Copy**: Copy the generated filter to your clipboard instantly
-
-## How to Use
-
-1. **Launch the Cropper** using the button at the top of the page
-2. **Load an Image**: Drag and drop a frame from your video (or any image)
-3. **Adjust the Crop Region**:
-   - Use the width/height inputs to set dimensions
-   - Use the X/Y inputs to set position
-   - Or click and drag the crop rectangle directly
-4. **Set Step Size**: Choose alignment (useful for codec requirements)
-5. **Copy the Filter**: Click "Copy to Clipboard" to get your `crop` filter
-
-## About the Crop Filter
-
-The FFmpeg `crop` filter removes unwanted portions of video. The basic syntax is:
-
-```
-crop=w=WIDTH:h=HEIGHT:x=X_OFFSET:y=Y_OFFSET
-```
-
-Where:
-- `w` = width of the output (cropped) video
-- `h` = height of the output (cropped) video
-- `x` = horizontal offset from the left edge
-- `y` = vertical offset from the top edge
-
-### Example Usage
-
-```bash
-ffmpeg -i input.mp4 -vf "crop=w=1920:h=800:x=0:y=140" output.mp4
-```
-
-This crops the video to 1920×800, removing 140 pixels from the top.
-
-### Why Step Alignment Matters
-
-Many video codecs work more efficiently when dimensions are divisible by certain values (typically 2, 8, or 16). Using the step alignment feature ensures your crop dimensions meet these requirements, which can:
-
-- Improve encoding efficiency
-- Prevent compatibility issues with some players
-- Avoid codec warnings or errors
-
-## Tips
-
-- **Get a Frame First**: Use FFmpeg to extract a frame from your video to load into the cropper:
-  ```bash
-  ffmpeg -i input.mp4 -ss 00:01:00 -frames:v 1 frame.png
-  ```
-- **Check Aspect Ratio**: Make sure your crop maintains the aspect ratio you want
-- **Test Your Filter**: Always test the generated filter on a short clip before processing your full video
-- **Mind the Borders**: Ensure the crop region doesn't include black bars or unwanted edges

@@ -2,222 +2,257 @@
 layout: base.liquid
 ---
 
-<div class="min-h-[calc(100vh-theme(spacing.16)-theme(spacing.24))]">
-  <!-- Hero Section -->
-  <section class="hero-home">
-    <div class="hero-text-box">
-      welcome to the party
-    </div>
-  </section>
-
-  <!-- Main Content Section -->
-  <section class="py-16 px-4">
-    <div class="max-w-4xl mx-auto">
-      <h1 class="text-3xl font-bold text-white mb-6">
-        FFmpeg tools, tips, & tricks
-      </h1>
-      <p class="text-zinc-300 leading-relaxed mb-4">
-        Updated <time datetime="{{ updated }}" class="text-teal-400">{{ updated }}</time>. {{ content }}
-        <a href="/about/" class="text-teal-400 hover:text-teal-300 underline">About »</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- Tools Section -->
-  <section class="py-16 px-4 bg-zinc-800/50">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold text-center text-white mb-4">
-        Tools
-      </h2>
-      <p class="text-center text-zinc-400 mb-12">
-        Interactive generators to help build FFmpeg commands
-      </p>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <a
-          href="/tools/vp9-wizard/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            VP9 Wizard
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            VP9 command generator for high-quality videos using 2-pass encoding
-          </p>
-        </a>
-
-        <a
-          href="/tools/av1-wizard/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            AV1 Wizard
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            AV1 command generator with SVT-AV1 encoder and optimized parameters
-          </p>
-        </a>
-
-        <a
-          href="/tools/x264-wizard/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            x264 Wizard
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            x264 command generator for H.264/AVC encoding with optimized settings
-          </p>
-        </a>
-
-        <a
-          href="/tools/x265-wizard/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            x265 Wizard
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            x265 command generator for H.265/HEVC encoding with superior compression
-          </p>
-        </a>
-
-        <a
-          href="/tools/cropper/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            Cropper
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            Visual tool for creating FFmpeg crop filters
-          </p>
-        </a>
-
-        <a
-          href="/tools/anamorphic-crop/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            Anamorphic Crop Calculator
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            Calculator for cropping anamorphic video with proper aspect ratio adjustments
-          </p>
-        </a>
-
-        <a
-          href="/tools/frame-interpolation/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            Frame Interpolation
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            Build minterpolate filter strings to smooth video frame rates
-          </p>
-        </a>
-
-        <a
-          href="/tools/duration-calculator/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            Duration Calculator
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            Calculate durations between timestamps for FFmpeg commands
-          </p>
-        </a>
-
-        <a
-          href="/tools/webm-from-image-sequence/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            WebM from Image Sequence
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            Convert image sequences to WebM <span class="text-zinc-500">(Legacy)</span>
-          </p>
-        </a>
+<section class="hero">
+  <div class="hero__media" style="background-image: url('/images/ffmpeg-party--desktop.jpg');">
+    <div class="hero__bracket tl" aria-hidden="true"></div>
+    <div class="hero__bracket tr" aria-hidden="true"></div>
+    <div class="hero__bracket bl" aria-hidden="true"></div>
+    <div class="hero__bracket br" aria-hidden="true"></div>
+    <div class="hero__overlay">
+      <div class="hero__hud">
+        <div>
+          <div><b>HOST</b> ffmpeg.party</div>
+          <div>SIG cosmic-aperture-06</div>
+          <div>SINCE 2025</div>
+        </div>
+        <div class="hero__hud-right">
+          <div><b>TOOLS</b> · {{ build.toolCount }}</div>
+          <div><b>GUIDES</b> · {{ build.guideCount }}</div>
+          <div>LIC MIT · CC BY-NC-SA</div>
+        </div>
+      </div>
+      <div class="hero__footnote">
+        ENCODERS x264 · x265 · svt-av1 · libvpx-vp9 · prores · dnxhr
       </div>
     </div>
-  </section>
-
-  <!-- Guides Section -->
-  <section class="py-16 px-4">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold text-center text-white mb-4">
-        Guides
-      </h2>
-      <p class="text-center text-zinc-400 mb-12">
-        Encoder documentation and recommended settings
-      </p>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <a
-          href="/guides/x264/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            x264 Encoder Guide
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            H.264/AVC encoding reference with quality settings
-          </p>
-        </a>
-
-        <a
-          href="/guides/x265/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            x265 Encoder Guide
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            H.265/HEVC encoding reference and best practices
-          </p>
-        </a>
-
-        <a
-          href="/guides/av1/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            AV1 Encoder Guide
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            AV1 encoding with SVT-AV1 parameters and quality settings
-          </p>
-        </a>
-      </div>
+    <div class="hero__marker">
+      <div class="hero__marker-line"></div>
+      <div class="hero__marker-tag">$ welcome <b>to the party</b></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Resources Section -->
-  <section class="py-16 px-4 bg-zinc-800/50">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold text-center text-white mb-4">
-        Resources
-      </h2>
-      <p class="text-center text-zinc-400 mb-12">
-        External FFmpeg resources and references
-      </p>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <a
-          href="/resources/"
-          class="bg-zinc-800 hover:bg-zinc-750 p-6 rounded-lg border border-zinc-700 hover:border-teal-500 transition-all group"
-        >
-          <h3 class="text-xl font-semibold text-white mb-2 group-hover:text-teal-400 transition-colors">
-            FFmpeg Resources
-          </h3>
-          <p class="text-zinc-400 text-sm">
-            Curated links to helpful FFmpeg documentation and tools
-          </p>
-        </a>
-      </div>
-    </div>
-  </section>
+{%- capture tickerItems -%}
+<span class="ticker__item"><span class="k">ENCODERS</span><span>//</span><span>x264 · x265 · svt-av1 · libvpx-vp9</span></span>
+<span class="ticker__item"><span class="k">TOOLS</span><span>//</span><span>{{ build.toolCount }} interactive generators</span></span>
+<span class="ticker__item"><span class="k">GUIDES</span><span>//</span><span>x264 · x265 · av1</span></span>
+<span class="ticker__item"><span class="k">TIP</span><span>//</span><span>use -movflags +faststart for streamable mp4</span></span>
+<span class="ticker__item"><span class="k">CONTAINERS</span><span>//</span><span>mp4 · mkv · webm · mov</span></span>
+<span class="ticker__item"><span class="k">FILTERS</span><span>//</span><span>scale · crop · pad · zscale · drawtext</span></span>
+<span class="ticker__item"><span class="k">TIP</span><span>//</span><span>x264 -crf 23 is the sweet spot</span></span>
+<span class="ticker__item"><span class="k">LATEST</span><span>//</span><span>frame interpolation tool</span></span>
+{%- endcapture -%}
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">{{ tickerItems }}{{ tickerItems }}</div>
 </div>
+
+<section class="shell">
+  <div class="intro">
+    <div>
+      <div class="intro__label">[ 00 ] readme.md</div>
+      <div class="intro__kv">
+        <div><span>updated</span><b>{{ build.date }}</b></div>
+        <div><span>tools</span><b>{{ build.toolCount }}</b></div>
+        <div><span>guides</span><b>{{ build.guideCount }}</b></div>
+        <div><span>license</span><b>MIT</b></div>
+      </div>
+    </div>
+    <div>
+      <h1 class="intro__headline">
+        FFmpeg tools, tips, <em>&amp; tricks</em><br>
+        for video people who <em>like it messy.</em>
+      </h1>
+      <div class="intro__body" style="margin-top: 24px;">
+        <p>
+          ffmpeg.party is an informal resource for FFmpeg generators, tips, tricks, and guides. A side project, updated whenever something breaks or something cool appears.
+        </p>
+        <p class="intro__body--mono">
+          $ <span class="k">cat</span> about.md <span class="pipe">|</span> <span class="k">less</span>&nbsp;&nbsp;<a href="/about/">→ about</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section shell" id="tools">
+  <div class="section__header">
+    <div>
+      <div class="section__meta"><span class="num">[ 01 ]</span><span>tools_</span></div>
+      <h2 class="section__title">Interactive generators</h2>
+      <div class="section__kicker">$ pick a tool → fill in the form → copy the command</div>
+    </div>
+    <div class="section__right">
+      {{ build.toolCount }} tools online
+    </div>
+  </div>
+
+  <div class="rack">
+    <div class="rack__head" aria-hidden="true">
+      <div>id</div>
+      <div>name</div>
+      <div>description</div>
+      <div>tags</div>
+      <div></div>
+    </div>
+
+    <a class="row" href="/tools/vp9-wizard/">
+      <div class="row__id">T/01</div>
+      <div class="row__name"><b>vp9-wizard</b><span>$ ffmpeg --codec libvpx-vp9</span></div>
+      <div class="row__desc">VP9 command generator for high-quality videos using 2-pass encoding.</div>
+      <div class="row__tags"><span class="tag teal">vp9</span><span class="tag">2-pass</span><span class="tag">webm</span></div>
+      <div class="row__arrow">→</div>
+    </a>
+
+    <a class="row" href="/tools/av1-wizard/">
+      <div class="row__id">T/02</div>
+      <div class="row__name"><b>av1-wizard</b><span>$ ffmpeg --codec libsvtav1</span></div>
+      <div class="row__desc">AV1 command generator with SVT-AV1 encoder and tuned parameters.</div>
+      <div class="row__tags"><span class="tag teal">av1</span><span class="tag amber">svt</span><span class="tag magenta">10-bit</span></div>
+      <div class="row__arrow">→</div>
+    </a>
+
+    <a class="row" href="/tools/x264-wizard/">
+      <div class="row__id">T/03</div>
+      <div class="row__name"><b>x264-wizard</b><span>$ ffmpeg --codec libx264</span></div>
+      <div class="row__desc">x264 generator for H.264/AVC with sensible defaults and quality presets.</div>
+      <div class="row__tags"><span class="tag teal">h.264</span><span class="tag">mp4</span><span class="tag">web</span></div>
+      <div class="row__arrow">→</div>
+    </a>
+
+    <a class="row" href="/tools/x265-wizard/">
+      <div class="row__id">T/04</div>
+      <div class="row__name"><b>x265-wizard</b><span>$ ffmpeg --codec libx265</span></div>
+      <div class="row__desc">x265 generator for H.265/HEVC with 10-bit pipeline and tune profiles.</div>
+      <div class="row__tags"><span class="tag teal">h.265</span><span class="tag amber">10-bit</span><span class="tag magenta">hdr</span></div>
+      <div class="row__arrow">→</div>
+    </a>
+
+    <a class="row" href="/tools/cropper/">
+      <div class="row__id">T/05</div>
+      <div class="row__name"><b>cropper</b><span>$ ffmpeg --vf crop=…</span></div>
+      <div class="row__desc">Interactive visual cropper that emits the exact <code>-vf crop=</code> value.</div>
+      <div class="row__tags"><span class="tag violet">filter</span><span class="tag">visual</span></div>
+      <div class="row__arrow">→</div>
+    </a>
+
+    <a class="row" href="/tools/anamorphic-crop/">
+      <div class="row__id">T/06</div>
+      <div class="row__name"><b>anamorphic-crop</b><span>$ ffmpeg --vf scale,setsar</span></div>
+      <div class="row__desc">Anamorphic crop calculator for DVDs, broadcast, and squeeze-lens content.</div>
+      <div class="row__tags"><span class="tag amber">math</span><span class="tag">aspect</span></div>
+      <div class="row__arrow">→</div>
+    </a>
+
+    <a class="row" href="/tools/frame-interpolation/">
+      <div class="row__id">T/07</div>
+      <div class="row__name"><b>frame-interpolation</b><span>$ ffmpeg --vf minterpolate</span></div>
+      <div class="row__desc">Build minterpolate filter strings to smooth video frame rates.</div>
+      <div class="row__tags"><span class="tag violet">filter</span><span class="tag">motion</span></div>
+      <div class="row__arrow">→</div>
+    </a>
+
+    <a class="row" href="/tools/duration-calculator/">
+      <div class="row__id">T/08</div>
+      <div class="row__name"><b>duration-calculator</b><span>$ calc -t end-start</span></div>
+      <div class="row__desc">Calculate durations between timestamps for FFmpeg <code>-t</code> values.</div>
+      <div class="row__tags"><span class="tag amber">math</span><span class="tag">time</span></div>
+      <div class="row__arrow">→</div>
+    </a>
+
+    <a class="row" href="/tools/webm-from-image-sequence/">
+      <div class="row__id">T/09</div>
+      <div class="row__name"><b>webm-from-image-sequence</b><span>$ ffmpeg -pattern_type glob</span></div>
+      <div class="row__desc">Convert numbered image sequences into WebM video.</div>
+      <div class="row__tags"><span class="tag">webm</span><span class="tag">sequence</span><span class="tag magenta">legacy</span></div>
+      <div class="row__arrow">→</div>
+    </a>
+  </div>
+</section>
+
+<section class="section shell" id="guides">
+  <div class="section__header">
+    <div>
+      <div class="section__meta"><span class="num">[ 02 ]</span><span>guides_</span></div>
+      <h2 class="section__title">Encoder references</h2>
+      <div class="section__kicker">$ grep -r 'why is my encode broken' /guides</div>
+    </div>
+    <div class="section__right">
+      {{ build.guideCount }} guides
+    </div>
+  </div>
+  <div class="guides">
+    <a class="guide" href="/guides/x264/">
+      <div class="guide__num">G/01</div>
+      <div class="guide__title">x264 encoder guide</div>
+      <div class="guide__desc">FFmpeg parameters and quality settings for H.264/AVC encoding.</div>
+      <div class="guide__meta"><span>reference</span><span>updated 2026</span></div>
+    </a>
+    <a class="guide" href="/guides/x265/">
+      <div class="guide__num">G/02</div>
+      <div class="guide__title">x265 / HEVC primer</div>
+      <div class="guide__desc">10-bit pipelines, HDR10 metadata, and when x265 is actually worth it.</div>
+      <div class="guide__meta"><span>reference</span><span>updated 2026</span></div>
+    </a>
+    <a class="guide" href="/guides/av1/">
+      <div class="guide__num">G/03</div>
+      <div class="guide__title">AV1 in production</div>
+      <div class="guide__desc">SVT-AV1 settings, presets, and tradeoffs for modern AV1 encoding.</div>
+      <div class="guide__meta"><span>reference</span><span>updated 2026</span></div>
+    </a>
+  </div>
+</section>
+
+<section class="section shell" id="resources" style="border-bottom: none;">
+  <div class="section__header">
+    <div>
+      <div class="section__meta"><span class="num">[ 03 ]</span><span>resources_</span></div>
+      <h2 class="section__title">Elsewhere on disk</h2>
+      <div class="section__kicker">links worth bookmarking</div>
+    </div>
+    <div class="section__right">
+      <a href="/resources/">see all →</a>
+    </div>
+  </div>
+  <div class="reslist">
+    <a class="resitem" href="https://ffmpeg.org/documentation.html" target="_blank" rel="noopener noreferrer">
+      <div class="resitem__main">
+        <div class="resitem__title">↗ FFmpeg official documentation</div>
+        <div class="resitem__url">ffmpeg.org/documentation.html</div>
+        <div class="resitem__desc">The canonical reference. Dense, authoritative, occasionally out of date.</div>
+      </div>
+      <div class="resitem__meta">
+        <div class="resitem__kind">OFFICIAL</div>
+      </div>
+    </a>
+    <a class="resitem" href="https://amiaopensource.github.io/ffmprovisr/" target="_blank" rel="noopener noreferrer">
+      <div class="resitem__main">
+        <div class="resitem__title">↗ ffmprovisr</div>
+        <div class="resitem__url">amiaopensource.github.io/ffmprovisr</div>
+        <div class="resitem__desc">Community-maintained recipe collection from media archivists. Tested commands for common workflows.</div>
+      </div>
+      <div class="resitem__meta">
+        <div class="resitem__kind">RECIPES</div>
+      </div>
+    </a>
+    <a class="resitem" href="https://trac.ffmpeg.org/wiki" target="_blank" rel="noopener noreferrer">
+      <div class="resitem__main">
+        <div class="resitem__title">↗ FFmpeg Wiki</div>
+        <div class="resitem__url">trac.ffmpeg.org/wiki</div>
+        <div class="resitem__desc">Older but solid. Some of the clearest H.264/H.265/VP9/AV1 encoding guides anywhere.</div>
+      </div>
+      <div class="resitem__meta">
+        <div class="resitem__kind">WIKI</div>
+      </div>
+    </a>
+    <a class="resitem" href="https://mediaarea.net/en/MediaInfo" target="_blank" rel="noopener noreferrer">
+      <div class="resitem__main">
+        <div class="resitem__title">↗ MediaInfo</div>
+        <div class="resitem__url">mediaarea.net/MediaInfo</div>
+        <div class="resitem__desc">Inspect anything. Detailed technical info about video and audio files.</div>
+      </div>
+      <div class="resitem__meta">
+        <div class="resitem__kind">TOOLS</div>
+      </div>
+    </a>
+  </div>
+</section>

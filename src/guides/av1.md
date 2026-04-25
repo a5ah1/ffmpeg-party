@@ -1,8 +1,12 @@
 ---
 layout: guide.liquid
-title: AV1 Encoder Guide
+title: AV1 encoder guide
 description: FFmpeg parameters and quality settings for AV1 video encoding with SVT-AV1
 permalink: /guides/av1/
+guideNumber: G/03
+relatedTool:
+  href: /tools/av1-wizard/
+  name: av1-wizard
 ---
 
 ## Overview

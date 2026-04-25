@@ -1,241 +1,223 @@
 ---
 layout: tool.liquid
-title: x265 (HEVC) Wizard
-description: x265 command generator for H.265/HEVC encoding with superior compression
+title: x265 wizard
+description: Generate FFmpeg commands for H.265/HEVC encoding with the x265 encoder
 permalink: /tools/x265-wizard/
+toolNumber: T/04
 useFormGenerator: true
 toolScript: x265-wizard.js
-aboutContent: |
-  Generate x265 (H.265/HEVC) encoding commands with recommended settings for superior compression efficiency. Ideal for high-resolution content and reduced file sizes.
 ---
 
-<!-- Utility Buttons -->
-<div class="flex justify-end gap-3 mb-8">
-  <button id="resetForm" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-md border border-zinc-700 transition-colors">
-    Reset Form
-  </button>
-  <a href="/tools/x265-wizard/" target="_blank" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-md border border-zinc-700 transition-colors inline-block">
-    Open in New Tab
-  </a>
+<div class="wizard">
+  <div class="wizard__form">
+
+    <div class="notice">
+      <span class="ico" aria-hidden="true">⚠</span>
+      <span>Always read commands before running them. Verify paths and output filenames.</span>
+    </div>
+
+    <div class="btn-row">
+      <button type="button" id="resetForm" class="btn">[ reset ]</button>
+      <a href="/tools/x265-wizard/" target="_blank" class="btn">[ open in new tab ↗ ]</a>
+    </div>
+
+    <div class="fieldset">
+      <div class="fieldset__head">
+        <div class="fieldset__title"><span class="num">01</span>SOURCE / OUTPUT</div>
+        <div class="fieldset__hint">filenames + time range</div>
+      </div>
+      <div class="fieldset__body">
+        <div class="field">
+          <label class="field__label" for="inputFile">input <span class="flag">-i</span></label>
+          <input id="inputFile" type="text" class="input" autocomplete="off" placeholder="input.mp4">
+        </div>
+        <div class="field">
+          <label class="field__label" for="outputFilename">output</label>
+          <input id="outputFilename" type="text" class="input" autocomplete="off" placeholder="output.mp4">
+          <div class="field__hint">.mp4 or .mkv recommended</div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="inPoint">in point <span class="flag">-ss</span></label>
+          <input id="inPoint" type="text" class="input" autocomplete="off" placeholder="1:30 or 90">
+          <div class="field__hint">optional · accepts hh:mm:ss or seconds</div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="outPoint">out point <span class="flag">-to</span></label>
+          <input id="outPoint" type="text" class="input" autocomplete="off" placeholder="2:45 or 165">
+          <div class="field__hint">optional · accepts hh:mm:ss or seconds</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fieldset">
+      <div class="fieldset__head">
+        <div class="fieldset__title"><span class="num">02</span>VIDEO ENCODING</div>
+        <div class="fieldset__hint">libx265 · CRF mode</div>
+      </div>
+      <div class="fieldset__body">
+        <div class="field">
+          <label class="field__label" for="crf">crf <span class="flag">-crf</span></label>
+          <input id="crf" type="number" class="input" value="28" step="1" min="0" max="51" autocomplete="off">
+          <div class="field__hint">default 28 · range 0–51 · lower = better quality</div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="preset">preset <span class="flag">-preset</span></label>
+          <select id="preset" class="select">
+            <option value="ultrafast">ultrafast — fastest</option>
+            <option value="superfast">superfast</option>
+            <option value="veryfast">veryfast</option>
+            <option value="faster">faster</option>
+            <option value="fast">fast</option>
+            <option value="medium" selected>medium — default</option>
+            <option value="slow">slow</option>
+            <option value="slower">slower</option>
+            <option value="veryslow">veryslow</option>
+            <option value="placebo">placebo — slowest</option>
+          </select>
+          <div class="field__hint">slower = better compression</div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="frameRate">frame rate preset</label>
+          <select id="frameRate" class="select">
+            <option value="" selected>custom / none</option>
+            <option value="24">24 fps</option>
+            <option value="25">25 fps</option>
+            <option value="30">30 fps</option>
+            <option value="50">50 fps</option>
+            <option value="60">60 fps</option>
+          </select>
+          <div class="field__hint">auto-populates x265 params below</div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="pixelFormat">pixel format <span class="flag">-pix_fmt</span></label>
+          <select id="pixelFormat" class="select">
+            <option value="" selected>no change (use source)</option>
+            <option value="yuv420p">yuv420p — 8-bit 4:2:0</option>
+            <option value="yuv420p10le">yuv420p10le — 10-bit 4:2:0</option>
+          </select>
+          <div class="field__hint">10-bit recommended for 4K / HDR</div>
+        </div>
+        <div class="field span-2">
+          <label class="field__label" for="x265Params">x265 params <span class="flag">-x265-params</span></label>
+          <input id="x265Params" type="text" class="input" autocomplete="off" placeholder="keyint=300:bframes=6:ref=4">
+          <div class="field__hint">colon-separated · auto-filled by frame-rate preset, editable</div>
+        </div>
+        <div class="field span-2">
+          <label class="field__label" for="videoFilter">video filter <span class="flag">-vf</span></label>
+          <input id="videoFilter" type="text" class="input" autocomplete="off" placeholder="scale=1280:720">
+          <div class="field__hint">optional</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fieldset">
+      <div class="fieldset__head">
+        <div class="fieldset__title"><span class="num">03</span>AUDIO</div>
+        <div class="fieldset__hint">aac / libfdk_aac · cbr or vbr</div>
+      </div>
+      <div class="fieldset__body">
+        <div class="field">
+          <label class="field__label" for="audioCodec">codec <span class="flag">-c:a</span></label>
+          <select id="audioCodec" class="select">
+            <option value="aac" selected>aac — native FFmpeg</option>
+            <option value="libfdk_aac">libfdk_aac — high quality (external)</option>
+          </select>
+        </div>
+        <div class="field">
+          <div class="field__label">mode</div>
+          <div class="check-row">
+            <label class="radio"><input type="radio" id="audioModeCbr" name="audioMode" value="cbr" checked><span class="box"></span>CBR</label>
+            <label class="radio"><input type="radio" id="audioModeVbr" name="audioMode" value="vbr"><span class="box"></span>VBR</label>
+          </div>
+        </div>
+        <div class="field" id="audioBitrateField">
+          <label class="field__label" for="audioBitrate">bitrate <span class="flag">-b:a</span></label>
+          <input id="audioBitrate" type="text" class="input" autocomplete="off" value="192k" placeholder="192k">
+          <div class="field__hint">128k mono · 192k stereo · 384k 5.1</div>
+        </div>
+        <div class="field" id="audioQualityField" style="display: none;">
+          <label class="field__label" for="audioQuality">vbr quality</label>
+          <input id="audioQuality" type="number" class="input" step="0.1" autocomplete="off">
+          <div class="field__hint" id="audioQualityHint">quality setting for VBR mode</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fieldset">
+      <div class="fieldset__head">
+        <div class="fieldset__title"><span class="num">04</span>METADATA</div>
+        <div class="fieldset__hint">mp4 container · limited support in others</div>
+      </div>
+      <div class="fieldset__body">
+        <div class="field span-2">
+          <div class="check-row">
+            <label class="check"><input type="checkbox" id="removeMetadata"><span class="box"></span>strip existing metadata first</label>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="metadataTitle">title</label>
+          <input id="metadataTitle" type="text" class="input" autocomplete="off" placeholder="My video">
+        </div>
+        <div class="field">
+          <label class="field__label" for="metadataDescription">description</label>
+          <input id="metadataDescription" type="text" class="input" autocomplete="off" placeholder="A description">
+        </div>
+        <div class="field">
+          <label class="field__label" for="metadataComment">comment</label>
+          <input id="metadataComment" type="text" class="input" autocomplete="off" placeholder="Optional comment">
+          <div class="field__hint">x265 records encoding info automatically</div>
+        </div>
+        <div class="field">
+          <label class="field__label" for="metadataYear">year</label>
+          <input id="metadataYear" type="text" class="input" autocomplete="off" placeholder="2025" pattern="\d{4}">
+        </div>
+      </div>
+    </div>
+
+    <div class="fieldset">
+      <div class="fieldset__head">
+        <div class="fieldset__title"><span class="num">05</span>ADVANCED</div>
+        <div class="fieldset__hint">extra ffmpeg flags</div>
+      </div>
+      <div class="fieldset__body fieldset__body--single">
+        <div class="field">
+          <label class="field__label" for="additionalOptions">additional ffmpeg options</label>
+          <input id="additionalOptions" type="text" class="input" autocomplete="off" placeholder="-threads 4">
+          <div class="field__hint">optional · custom parameters appended</div>
+        </div>
+      </div>
+    </div>
+
+    <details class="tool-about">
+      <summary>about · references</summary>
+      <div class="tool-about__body">
+        <p>Generates FFmpeg commands for H.265/HEVC files using the x265 encoder. Only input and output filenames are required.</p>
+        <p><strong>x265 vs x264:</strong> 25–50% better compression at equivalent visual quality, at the cost of slower encoding. Default CRF is 28 (which gives roughly equivalent quality to x264 CRF 23).</p>
+        <p><strong>Frame-rate presets</strong> auto-populate optimized x265 parameters. See the <a href="/guides/x265/">x265 guide</a> for details on what each value does.</p>
+        <p><strong>10-bit pipelines:</strong> set pixel format to <code>yuv420p10le</code> for 4K / HDR content. 10-bit gives noticeably cleaner gradients even on 8-bit displays.</p>
+        <p><strong>Audio:</strong> native FFmpeg AAC or libfdk_aac (higher quality, requires custom build). CBR uses constant bitrate (~192k stereo); VBR uses quality-based encoding.</p>
+        <p><strong>Time format:</strong> in/out points accept time format (<code>1:30</code>, <code>00:01:30</code>) or seconds (<code>90</code>). Semicolons get converted to colons automatically.</p>
+        <h3>References</h3>
+        <ul>
+          <li><a href="/guides/x265/">x265 encoder guide</a></li>
+          <li><a href="https://trac.ffmpeg.org/wiki/Encode/H.265" target="_blank" rel="noopener noreferrer">FFmpeg H.265 encoding guide</a></li>
+          <li><a href="https://x265.readthedocs.io/" target="_blank" rel="noopener noreferrer">x265 documentation</a></li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="wizard__preview">
+    <div class="preview">
+      <div class="preview__head">
+        <div class="dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <span>$ ffmpeg-command</span>
+      </div>
+      <div class="preview__body" id="output"></div>
+      <div class="preview__foot">
+        <button type="button" class="btn primary" id="copy">[ copy command ]</button>
+        <span class="preview__copy-status" id="copyStatus">copied!</span>
+      </div>
+    </div>
+  </div>
 </div>
-
-<!-- Input/Output Section -->
-<section class="mb-10">
-  <h2 class="ffmpeg-section-header">Input & Output</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="ffmpeg-field">
-      <label for="inputFile">Input filename</label>
-      <input id="inputFile" type="text" autocomplete="off" placeholder="input.mp4">
-    </div>
-    <div class="ffmpeg-field">
-      <label for="outputFilename">Output filename</label>
-      <input id="outputFilename" type="text" autocomplete="off" placeholder="output.mp4">
-      <p class="field-hint">Recommended: .mp4 container for broad compatibility</p>
-    </div>
-  </div>
-</section>
-
-<!-- Timing Section -->
-<section class="mb-10">
-  <h2 class="ffmpeg-section-header">Timing</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="ffmpeg-field">
-      <label for="inPoint">In point</label>
-      <input id="inPoint" type="text" autocomplete="off" placeholder="1:30 or 90">
-      <p class="field-hint">Optional. Time format (1:30, 00:01:30) or seconds (90)</p>
-    </div>
-    <div class="ffmpeg-field">
-      <label for="outPoint">Out point</label>
-      <input id="outPoint" type="text" autocomplete="off" placeholder="2:45 or 165">
-      <p class="field-hint">Optional. Time format (2:45, 00:02:45) or seconds (165)</p>
-    </div>
-  </div>
-</section>
-
-<!-- Video Encoding Options -->
-<section class="mb-10">
-  <h2 class="ffmpeg-section-header">Video Encoding</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="ffmpeg-field">
-      <label for="crf">CRF (quality)</label>
-      <input id="crf" type="number" value="28" step="1" min="0" max="51" autocomplete="off">
-      <p class="field-hint">Default: 28. Lower = better quality/larger file (0-51)</p>
-    </div>
-    <div class="ffmpeg-field">
-      <label for="preset">Preset</label>
-      <select id="preset">
-        <option value="ultrafast">ultrafast - Fastest</option>
-        <option value="superfast">superfast</option>
-        <option value="veryfast">veryfast</option>
-        <option value="faster">faster</option>
-        <option value="fast">fast</option>
-        <option value="medium" selected>medium - Default</option>
-        <option value="slow">slow</option>
-        <option value="slower">slower</option>
-        <option value="veryslow">veryslow</option>
-        <option value="placebo">placebo - Slowest</option>
-      </select>
-      <p class="field-hint">Speed/quality tradeoff. Slower = better compression</p>
-    </div>
-    <div class="ffmpeg-field">
-      <label for="frameRate">Frame rate presets</label>
-      <select id="frameRate">
-        <option value="" selected>Custom/None</option>
-        <option value="24">24 fps</option>
-        <option value="25">25 fps</option>
-        <option value="30">30 fps</option>
-        <option value="50">50 fps</option>
-        <option value="60">60 fps</option>
-      </select>
-      <p class="field-hint">Auto-populates optimized x265 parameters below</p>
-    </div>
-    <div class="ffmpeg-field">
-      <label for="pixelFormat">Pixel format (bit depth)</label>
-      <select id="pixelFormat">
-        <option value="" selected>No change (use source)</option>
-        <option value="yuv420p">yuv420p - 8-bit 4:2:0</option>
-        <option value="yuv420p10le">yuv420p10le - 10-bit 4:2:0</option>
-      </select>
-      <p class="field-hint">Set color format and bit depth. 10-bit recommended for 4K HDR.</p>
-    </div>
-    <div class="ffmpeg-field md:col-span-2">
-      <label for="x265Params">x265 parameters</label>
-      <input id="x265Params" type="text" autocomplete="off" placeholder="no-open-gop=1:keyint=300:gop-lookahead=12:bframes=6">
-      <p class="field-hint">Auto-filled from frame rate selection, but editable. Colon-separated format.</p>
-    </div>
-    <div class="ffmpeg-field md:col-span-2">
-      <label for="videoFilter">Video filter</label>
-      <input id="videoFilter" type="text" autocomplete="off" placeholder="scale=1280:720">
-      <p class="field-hint">Optional. Example: scale=1280:720 or crop=1920:800:0:140</p>
-    </div>
-  </div>
-</section>
-
-<!-- Audio Encoding Options -->
-<section class="mb-10">
-  <h2 class="ffmpeg-section-header">Audio Encoding</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="ffmpeg-field">
-      <label for="audioCodec">Audio codec</label>
-      <select id="audioCodec">
-        <option value="aac" selected>aac - Native FFmpeg AAC</option>
-        <option value="libfdk_aac">libfdk_aac - High quality (requires external library)</option>
-      </select>
-    </div>
-    <div class="ffmpeg-field md:col-span-2">
-      <span class="pseudo-label">Audio mode</span>
-      <div class="ffmpeg-radio-group">
-        <div class="ffmpeg-radio-option">
-          <input type="radio" id="audioModeCbr" name="audioMode" value="cbr" checked>
-          <label for="audioModeCbr">CBR (Constant Bitrate)</label>
-        </div>
-        <div class="ffmpeg-radio-option">
-          <input type="radio" id="audioModeVbr" name="audioMode" value="vbr">
-          <label for="audioModeVbr">VBR (Variable Bitrate)</label>
-        </div>
-      </div>
-    </div>
-    <div class="ffmpeg-field" id="audioBitrateField">
-      <label for="audioBitrate">Audio bitrate</label>
-      <input id="audioBitrate" type="text" autocomplete="off" value="192k" placeholder="192k">
-      <p class="field-hint">Recommended: 128k (mono), 192k (stereo), 384k (5.1)</p>
-    </div>
-    <div class="ffmpeg-field" id="audioQualityField" style="display: none;">
-      <label for="audioQuality">VBR quality</label>
-      <input id="audioQuality" type="number" step="0.1" autocomplete="off">
-      <p class="field-hint" id="audioQualityHint">Quality setting for VBR mode</p>
-    </div>
-  </div>
-</section>
-
-<!-- Metadata Section -->
-<section class="mb-10">
-  <h2 class="ffmpeg-section-header">Metadata</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="ffmpeg-field md:col-span-2">
-      <p class="field-hint mb-4">
-        <strong>Note:</strong> These metadata fields are optimized for MP4 container. If using a different container (MKV, WebM), consider omitting metadata as support varies.
-      </p>
-      <div class="ffmpeg-checkbox-group">
-        <div class="ffmpeg-checkbox-option">
-          <input type="checkbox" id="removeMetadata">
-          <label for="removeMetadata">Remove existing metadata</label>
-        </div>
-      </div>
-    </div>
-    <div class="ffmpeg-field">
-      <label for="metadataTitle">Title</label>
-      <input id="metadataTitle" type="text" autocomplete="off" placeholder="My Video">
-    </div>
-    <div class="ffmpeg-field">
-      <label for="metadataDescription">Description</label>
-      <input id="metadataDescription" type="text" autocomplete="off" placeholder="A description">
-    </div>
-    <div class="ffmpeg-field">
-      <label for="metadataComment">Comment</label>
-      <input id="metadataComment" type="text" autocomplete="off" placeholder="Optional comment">
-      <p class="field-hint">Optional comment field</p>
-    </div>
-    <div class="ffmpeg-field">
-      <label for="metadataYear">Year</label>
-      <input id="metadataYear" type="text" autocomplete="off" placeholder="2025" pattern="\d{4}">
-      <p class="field-hint">Format: YYYY (e.g., 2025)</p>
-    </div>
-  </div>
-</section>
-
-<!-- Advanced Options -->
-<section class="mb-10">
-  <h2 class="ffmpeg-section-header">Advanced Options</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="ffmpeg-field md:col-span-2">
-      <label for="additionalOptions">Additional FFmpeg options</label>
-      <input id="additionalOptions" type="text" autocomplete="off" placeholder="-threads 4">
-      <p class="field-hint">Optional. Custom FFmpeg parameters</p>
-    </div>
-  </div>
-</section>
-
-<!-- Generated Command -->
-<section class="ffmpeg-output-wrapper">
-  <label>FFmpeg Command</label>
-  <div class="ffmpeg-output" id="output"></div>
-  <div class="ffmpeg-copy-wrapper">
-    <button id="copy" class="ffmpeg-copy-button">Copy Command</button>
-    <span id="copyStatus" class="ffmpeg-copy-status">Copied!</span>
-  </div>
-</section>
-
-<!-- About Content -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const aboutAside = document.querySelector('.ffmpeg-about');
-  if (aboutAside) {
-    const aboutContent = `
-      <p><strong>Note:</strong> This is an opinionated wizard focused on CRF-based quality encoding. It does not support bitrate (ABR) mode—only Constant Rate Factor for consistent visual quality.</p>
-
-      <p>This tool generates FFmpeg commands for creating high-quality H.265/HEVC files using the x265 encoder. The x265 encoder offers 25-50% better compression efficiency than x264 at equivalent quality levels, making it ideal for high-resolution content and archival purposes.</p>
-
-      <p><strong>Key Features:</strong> CRF-based quality control (default 28), configurable presets, frame rate presets that auto-populate optimized parameters, 10-bit encoding support for HDR content, and AAC audio with both CBR and VBR modes.</p>
-
-      <p><strong>Frame Rate Presets:</strong> Select a common frame rate to automatically populate optimized x265 parameters (closed GOP structure, keyint, bframes, gop-lookahead, etc.) based on recommendations from the <a href="/x265/">x265 guide</a>. You can edit these parameters manually if needed. The parameters shown are optimized for the medium preset.</p>
-
-      <p><strong>Audio Encoding:</strong> Choose between native FFmpeg AAC (built-in) or libfdk_aac (higher quality, requires compilation). CBR mode uses constant bitrate (recommended: 192k for stereo). VBR mode uses quality-based encoding—for native AAC use 0.1-2 range (experimental), for libfdk_aac use 1-5 scale.</p>
-
-      <p><strong>10-bit Encoding:</strong> For 4K HDR content, select "yuv420p10le" pixel format. This provides better color depth and is recommended for high-quality archival. Note that 10-bit encoding may not be compatible with all devices.</p>
-
-      <p><strong>Time Format:</strong> In/out points accept either time format (1:30, 00:01:30) or seconds (90). Use semicolons instead of colons if needed—they'll be converted automatically.</p>
-
-      <p><strong>Metadata:</strong> These fields (title, description, comment, year) are optimized for MP4 container. Other containers like MKV or WebM have limited metadata support. Check "Remove existing metadata" to strip source file metadata before adding new fields.</p>
-
-      <h3>References</h3>
-      <ol>
-        <li><a href="/x265/">x265 Encoder Guide</a> - Detailed recommendations and CRF values</li>
-        <li><a href="https://trac.ffmpeg.org/wiki/Encode/H.265" target="_blank" rel="noopener noreferrer">FFmpeg H.265 Encoding Guide</a></li>
-        <li><a href="https://trac.ffmpeg.org/wiki/Encode/AAC" target="_blank" rel="noopener noreferrer">FFmpeg AAC Encoding Guide</a></li>
-      </ol>
-    `;
-    aboutAside.querySelector('.about-content').innerHTML = aboutContent;
-  }
-});
-</script>

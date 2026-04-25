@@ -1,0 +1,28 @@
+---
+layout: base.liquid
+title: Page Not Found — ffmpeg.party
+description: The page you're looking for doesn't exist
+permalink: /404.html
+eleventyExcludeFromCollections: true
+---
+
+<div class="notfound">
+  <div class="notfound__code">$ ffmpeg -i {{ '{path}' }} → ENOENT · file not found</div>
+  <h1 class="notfound__title"><span class="accent">404</span> / not found</h1>
+  <p class="notfound__body">
+    The URL you followed doesn't exist on this site. It may have been moved or never existed in the first place.
+    Try one of these instead:
+  </p>
+  <ul class="notfound__list">
+    <li><a href="/"><b>~/ home</b><span>start over</span></a></li>
+    <li><a href="/about/"><b>about</b><span>what this site is</span></a></li>
+    <li><a href="/tools/vp9-wizard/"><b>vp9-wizard</b><span>VP9 generator</span></a></li>
+    <li><a href="/tools/av1-wizard/"><b>av1-wizard</b><span>AV1 generator</span></a></li>
+    <li><a href="/tools/x264-wizard/"><b>x264-wizard</b><span>H.264 generator</span></a></li>
+    <li><a href="/tools/x265-wizard/"><b>x265-wizard</b><span>H.265 generator</span></a></li>
+    <li><a href="/guides/x264/"><b>x264 guide</b><span>encoder reference</span></a></li>
+    <li><a href="/guides/x265/"><b>x265 guide</b><span>encoder reference</span></a></li>
+    <li><a href="/guides/av1/"><b>av1 guide</b><span>encoder reference</span></a></li>
+    <li><a href="/resources/"><b>resources</b><span>external links</span></a></li>
+  </ul>
+</div>

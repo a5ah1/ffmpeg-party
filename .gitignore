@@ -6,9 +6,6 @@ _site/
 dist/
 build/
 
-# Generated CSS (compiled from source)
-src/css/output.css
-
 # Environment variables
 .env
 .env.local
@@ -51,6 +48,7 @@ Desktop.ini
 # Project-specific (private working files)
 CLAUDE.md
 .claude/
+ignore/
 
 # Optional: Uncomment if you prefer not to commit lock files
 # package-lock.json

@@ -1,5 +1,8 @@
 /* Anamorphic Crop Tool - Visual Stage Styles */
 
+.hidden { display: none !important; }
+
+
 :root {
   --zinc-600: oklch(44.2% 0.017 285.786);
   --zinc-700: oklch(37% 0.013 285.805);
