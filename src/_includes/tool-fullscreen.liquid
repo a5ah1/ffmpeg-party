@@ -7,13 +7,13 @@
   <title>{{ title }} - ffmpeg.party</title>
   <meta name="description" content="{{ description }}">
   {% if customCSS %}
-  <link rel="stylesheet" href="/css/{{ customCSS }}">
+  <link rel="stylesheet" href="/css/{{ customCSS }}?v={{ build.timestamp }}">
   {% endif %}
 </head>
 <body>
   {{ content }}
   {% if customJS %}
-  <script src="/js/{{ customJS }}"></script>
+  <script src="/js/{{ customJS }}?v={{ build.timestamp }}"></script>
   {% endif %}
 </body>
 </html>

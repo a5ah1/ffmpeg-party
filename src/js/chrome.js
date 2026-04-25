@@ -84,9 +84,9 @@
   if (burger) burger.addEventListener('click', openDrawer);
   if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
   if (drawer) {
-    drawer.querySelectorAll('a').forEach((a) =>
-      a.addEventListener('click', closeDrawer)
-    );
+    drawer.addEventListener('click', (e) => {
+      if (e.target.closest('a')) closeDrawer();
+    });
   }
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && drawer && drawer.classList.contains('open')) {
@@ -94,14 +94,13 @@
     }
   });
 
-  // Headroom: hide topbar when scrolling down, reveal when scrolling up.
-  // Skipped if reduced-motion is requested or the library failed to load.
+  // Skip Headroom under prefers-reduced-motion (animated transform).
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const topbar = document.querySelector('.topbar');
   if (topbar && window.Headroom && !reduceMotion) {
     const headroom = new window.Headroom(topbar, {
-      offset: 80,        // wait until past the topbar's own height
-      tolerance: { up: 5, down: 5 },  // ignore micro-scroll jitter
+      offset: 80,
+      tolerance: { up: 5, down: 5 },
     });
     headroom.init();
   }

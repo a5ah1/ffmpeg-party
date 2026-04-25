@@ -6,9 +6,7 @@ layout: base.liquid
   <nav class="crumbs" aria-label="Breadcrumb">
     <a href="/">~/</a><span class="sep">/</span><a href="/#guides">guides</a><span class="sep">/</span><span class="cur">{{ page.fileSlug }}</span>
   </nav>
-  <div style="font-family: var(--fs-mono); font-size: 11px; color: var(--teal); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px;">
-    [ GUIDE · {{ guideNumber | default: "G" }} ]
-  </div>
+  <div class="page-head__eyebrow">[ GUIDE · {{ guideNumber | default: "G" }} ]</div>
   <h1 class="page-title">{{ title }}</h1>
   {% if description %}
     <p class="page-sub">{{ description }}</p>

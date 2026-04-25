@@ -31,11 +31,10 @@
       h.setAttribute('data-num', num);
 
       if (!h.id) {
-        let base = slugify(h.textContent || '');
-        let id = base || `section-${num}`;
+        const base = slugify(h.textContent || '') || `section-${num}`;
+        let id = base;
         let n = 2;
-        while (usedIds.has(id) || document.getElementById(id) !== h) {
-          if (!document.getElementById(id)) break;
+        while (usedIds.has(id) || document.getElementById(id)) {
           id = `${base}-${n++}`;
         }
         h.id = id;
@@ -45,7 +44,10 @@
       const li = document.createElement('li');
       const a = document.createElement('a');
       a.href = `#${h.id}`;
-      a.innerHTML = `<span>§${num}</span>${h.textContent}`;
+      const numSpan = document.createElement('span');
+      numSpan.textContent = `[${num}]`;
+      a.appendChild(numSpan);
+      a.appendChild(document.createTextNode(h.textContent));
       li.appendChild(a);
       ul.appendChild(li);
       links.push(a);

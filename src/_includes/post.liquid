@@ -6,9 +6,7 @@ layout: base.liquid
   <nav class="crumbs" aria-label="Breadcrumb">
     <a href="/">~/</a><span class="sep">/</span><a href="/blog/">blog</a><span class="sep">/</span><span class="cur">{{ page.fileSlug }}</span>
   </nav>
-  <div style="font-family: var(--fs-mono); font-size: 11px; color: var(--teal); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px;">
-    [ POST · {{ date | date: "%Y-%m-%d" }} ]
-  </div>
+  <div class="page-head__eyebrow">[ POST · {{ date | date: "%Y-%m-%d" }} ]</div>
   <h1 class="page-title">{{ title }}</h1>
   {% if description %}
     <p class="page-sub">{{ description }}</p>
@@ -19,17 +17,17 @@ layout: base.liquid
   <div></div>
   <article class="guide-prose">
     {{ content }}
-    <div style="margin-top: 48px; padding-top: 24px; border-top: 1px dashed var(--line); font-family: var(--fs-mono); font-size: 12px; color: var(--ink-3);">
+    <div class="post-back">
       <a href="/blog/">← back to blog</a>
     </div>
   </article>
   <aside class="aside" aria-label="Post meta">
     <h4>posted</h4>
-    <div style="color: var(--ink-1); font-size: 12px;">{{ date | date: "%B %-d, %Y" }}</div>
+    <div class="aside__value">{{ date | date: "%B %-d, %Y" }}</div>
     {% if author %}
       <div class="divider"></div>
       <h4>by</h4>
-      <div style="color: var(--ink-1); font-size: 12px;">{{ author }}</div>
+      <div class="aside__value">{{ author }}</div>
     {% endif %}
     <div class="divider"></div>
     <h4>elsewhere</h4>
