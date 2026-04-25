@@ -30,9 +30,9 @@ Dev server runs at http://localhost:8080
 
 ## Tech Stack
 
-- [Eleventy](https://www.11ty.dev/) - Static site generator
-- [Tailwind CSS 4](https://tailwindcss.com/) - Styling
-- Vanilla JavaScript - No frameworks
+- [Eleventy](https://www.11ty.dev/) — static site generator
+- Hand-written CSS — single design-system stylesheet (`src/css/site.css`), no build step
+- Vanilla JavaScript — no frameworks
 
 ## Deployment
 
