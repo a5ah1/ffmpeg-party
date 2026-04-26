@@ -4,6 +4,31 @@
 const FFmpegFormGenerator = (function () {
   'use strict';
 
+  // navigator.clipboard is undefined on insecure contexts (LAN IP, file://);
+  // fall back to a hidden textarea + execCommand for those.
+  function writeClipboard(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise((resolve, reject) => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject(new Error('execCommand copy failed'));
+      } catch (err) {
+        reject(err);
+      } finally {
+        document.body.removeChild(ta);
+      }
+    });
+  }
+
   // ---------------------------------------------------------------------------
   // sessionStorage persistence
   // ---------------------------------------------------------------------------
@@ -200,7 +225,7 @@ const FFmpegFormGenerator = (function () {
         return Promise.reject('Invalid text to copy');
       }
       try {
-        await navigator.clipboard.writeText(text);
+        await writeClipboard(text);
         if (statusElement) {
           statusElement.classList.add('show');
           setTimeout(() => statusElement.classList.remove('show'), 2000);
