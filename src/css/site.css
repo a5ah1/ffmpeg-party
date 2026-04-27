@@ -688,6 +688,16 @@ body.theme-new {
   box-shadow: 0 0 0 3px var(--teal-glow);
 }
 .input::placeholder, .textarea::placeholder { color: var(--ink-3); }
+.input:disabled, .select:disabled, .textarea:disabled {
+  background: color-mix(in oklch, var(--bg-0) 70%, var(--bg-2));
+  color: var(--ink-3);
+  border-color: color-mix(in oklch, var(--line) 60%, transparent);
+  cursor: not-allowed;
+}
+.input:disabled::placeholder, .textarea:disabled::placeholder { opacity: 0.5; }
+.field:has(> :is(.input, .select, .textarea):disabled) > :is(.field__label, .field__hint) {
+  opacity: 0.5;
+}
 .textarea { resize: vertical; min-height: 80px; }
 .select {
   appearance: none;

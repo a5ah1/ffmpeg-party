@@ -30,6 +30,7 @@ layout: base.liquid
       {%- if here != "x264" -%}<li><a href="/guides/x264/">→ x264 encoder</a></li>{%- endif -%}
       {%- if here != "x265" -%}<li><a href="/guides/x265/">→ x265 / HEVC</a></li>{%- endif -%}
       {%- if here != "av1" -%}<li><a href="/guides/av1/">→ AV1 / SVT-AV1</a></li>{%- endif -%}
+      {%- if here != "ai-video-loop" -%}<li><a href="/guides/ai-video-loop/">→ AI video loops</a></li>{%- endif -%}
     </ul>
     {% if relatedTool %}
       <div class="divider"></div>
@@ -48,3 +49,9 @@ layout: base.liquid
 </div>
 
 <script src="/js/guide.js?v={{ build.timestamp }}"></script>
+{% if useFormGenerator %}
+<script src="/js/form-generator.js?v={{ build.timestamp }}"></script>
+{% endif %}
+{% if guideScript %}
+<script src="/js/{{ guideScript }}?v={{ build.timestamp }}"></script>
+{% endif %}

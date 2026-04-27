@@ -40,7 +40,7 @@ layout: base.liquid
 <span class="ticker__item"><span class="k">CONTAINERS</span><span>//</span><span>mp4 · mkv · webm · mov</span></span>
 <span class="ticker__item"><span class="k">FILTERS</span><span>//</span><span>scale · crop · pad · zscale · drawtext</span></span>
 <span class="ticker__item"><span class="k">TIP</span><span>//</span><span>x264 -crf 23 is the sweet spot</span></span>
-<span class="ticker__item"><span class="k">LATEST</span><span>//</span><span>frame interpolation tool</span></span>
+<span class="ticker__item"><span class="k">LATEST</span><span>//</span><span>seamless AI video loops guide</span></span>
 {%- endcapture -%}
 <div class="ticker" aria-hidden="true">
   <div class="ticker__track">{{ tickerItems }}{{ tickerItems }}</div>
@@ -173,8 +173,8 @@ layout: base.liquid
   <div class="section__header">
     <div>
       <div class="section__meta"><span class="num">[ 02 ]</span><span>guides_</span></div>
-      <h2 class="section__title">Encoder references</h2>
-      <div class="section__kicker">$ grep -r 'why is my encode broken' /guides</div>
+      <h2 class="section__title">Reference &amp; workflow guides</h2>
+      <div class="section__kicker">$ ls /guides — encoder references and workflow recipes</div>
     </div>
     <div class="section__right">
       {{ build.guideCount }} guides
@@ -198,6 +198,12 @@ layout: base.liquid
       <div class="guide__title">AV1 in production</div>
       <div class="guide__desc">SVT-AV1 settings, presets, and tradeoffs for modern AV1 encoding.</div>
       <div class="guide__meta"><span>reference</span><span>updated 2026</span></div>
+    </a>
+    <a class="guide" href="/guides/ai-video-loop/">
+      <div class="guide__num">G/04</div>
+      <div class="guide__title">Seamless AI video loops</div>
+      <div class="guide__desc">Splice two AI-generated clips into a perfectly looping video.</div>
+      <div class="guide__meta"><span>workflow</span><span>updated 2026</span></div>
     </a>
   </div>
 </section>
